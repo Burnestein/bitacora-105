@@ -5,12 +5,3 @@
     text-align: center;
   }
   
-  .header button {
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #F6C60A;
-    color: rgb(0, 0, 0);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
