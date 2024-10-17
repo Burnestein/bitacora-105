@@ -1,0 +1,25 @@
+.login {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login form div {
+    margin-bottom: 15px;
+  }
+  
+  .login input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+  }
+  
+  .login button {
+    width: 48%;
+    padding: 10px;
+    margin-right: 4%;
+  }
+  

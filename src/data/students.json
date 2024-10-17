@@ -1,0 +1,39 @@
+[
+    {
+        "id": 1,
+        "nombre": "Juan",
+        "apellido_paterno": "Pérez",
+        "apellido_materno": "López",
+        "grado": "3",
+        "grupo": "A",
+        "turno": "Mañana",
+        "asesor": "Profesor Ramírez",
+        "incidencias": ["Tarea incompleta", "Llegada tarde"],
+        "imagen": "images/student1.png"
+    },
+    {
+        "id": 2,
+        "nombre": "María",
+        "apellido_paterno": "Gómez",
+        "apellido_materno": "Martínez",
+        "grado": "2",
+        "grupo": "B",
+        "turno": "Tarde",
+        "asesor": "Profesor Gutiérrez",
+        "incidencias": ["Comportamiento inapropiado"],
+        "imagen": "images/student2.png"
+    },
+    {
+        "id": 3,
+        "nombre": "José",
+        "apellido_paterno": "Castillo",
+        "apellido_materno": "Rosas",
+        "grado": "1",
+        "grupo": "A",
+        "turno": "Tarde",
+        "asesor": "Profesor Mendoza",
+        "incidencias": ["Comportamiento inapropiado"],
+        "imagen": "images/student2.png"
+    }
+
+]
