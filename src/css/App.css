@@ -1,0 +1,13 @@
+/* Eliminar cualquier margen o padding del body */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* Evita desplazamiento innecesario */
+  }
+  
+  /* Asegurar que el contenedor principal ocupe el 100% */
+  #root, .App {
+    height: 100%;
+  }
+  
