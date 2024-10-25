@@ -15,6 +15,11 @@ function MainContent({ view }) {
     setSelectedStudent(student);  // Establece el alumno seleccionado
   };
 
+  // Función para actualizar el estudiante en el estado de `MainContent`
+  const handleUpdateStudent = (updatedStudent) => {
+    setSelectedStudent(updatedStudent);  // Actualiza el alumno con los datos más recientes
+  };
+
   return (
     <div className="main-content">
       {view === 'Inicio' && (
@@ -29,7 +34,7 @@ function MainContent({ view }) {
       )}
 
       {selectedStudent && (
-        <StudentDetails student={selectedStudent} />  // Detalles del Alumno
+        <StudentDetails student={selectedStudent} onUpdateStudent={handleUpdateStudent} />  // Detalles del Alumno con la función para actualizar
       )}
 
       {view === 'Agregar Alumno' && (
