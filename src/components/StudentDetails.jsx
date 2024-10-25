@@ -102,24 +102,38 @@ function StudentDetails({ student, onUpdateStudent }) {
               onChange={handleChange}
             />
           </div>
+
+          {/* Grado: Selector */}
           <div>
             <label>Grado: </label>
-            <input
-              type="text"
-              name="grado"
-              value={editedData.grado}
-              onChange={handleChange}
-            />
+            <select name="grado" value={editedData.grado} onChange={handleChange}>
+              <option value="">Selecciona el Grado</option>
+              <option value="Primero">Primero</option>
+              <option value="Segundo">Segundo</option>
+              <option value="Tercero">Tercero</option>
+            </select>
           </div>
+
+          {/* Grupo: Selector */}
           <div>
             <label>Grupo: </label>
-            <input
-              type="text"
-              name="grupo"
-              value={editedData.grupo}
-              onChange={handleChange}
-            />
+            <select name="grupo" value={editedData.grupo} onChange={handleChange}>
+              <option value="">Selecciona el Grupo</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+            </select>
           </div>
+
+          {/* Turno: Selector */}
+          <div>
+            <label>Turno: </label>
+            <select name="turno" value={editedData.turno} onChange={handleChange}>
+              <option value="">Selecciona el Turno</option>
+              <option value="Matutino">Matutino</option>
+              <option value="Vespertino">Vespertino</option>
+            </select>
+          </div>
+
           <div>
             <label>Asesor: </label>
             <input
@@ -135,15 +149,6 @@ function StudentDetails({ student, onUpdateStudent }) {
               type="text"
               name="incidencias"
               value={editedData.incidencias}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Turno: </label>
-            <input
-              type="text"
-              name="turno"
-              value={editedData.turno}
               onChange={handleChange}
             />
           </div>
