@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import { collection, addDoc, doc, updateDoc } from 'firebase/firestore'; // Importar addDoc y updateDoc
-import { db } from '../firebase-config';  // Conectar con la base de datos Firestore
+
+const API_BASE_URL = 'http://18.119.213.232:3001';
 
 function AddStudentForm() {
   const [formData, setFormData] = useState({
-    apellido_materno: '',
-    apellido_paterno: '',
-    asesor: '',
+    nombre: '',
+    apepa: '',
+    apemat: '',
+    domicilio: '',
+    padre: '',
+    parentezco: '',
+    telefono: '',
+    telefonod: '',
     grado: '',
     grupo: '',
-    imagen: '',
-    incidencias: '',
-    nombre: '',
-    turno: ''
+    turno: '',
+    telefonot: ''
   });
 
   const [loading, setLoading] = useState(false);
@@ -26,41 +29,45 @@ function AddStudentForm() {
     });
   };
 
-  // Función para agregar el alumno a Firestore
+  // Función para enviar el formulario a la API en AWS
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);  // Indicador de carga
+    setLoading(true);
     try {
-      // Primero agregamos el documento sin el campo 'id'
-      const docRef = await addDoc(collection(db, 'alumnos'), formData);
-
-      // Luego obtenemos el ID generado automáticamente por Firestore
-      const idGenerado = docRef.id;
-
-      // Actualizamos el documento con el campo 'id'
-      const alumnoRef = doc(db, 'alumnos', idGenerado);
-      await updateDoc(alumnoRef, {
-        id: idGenerado
+      const response = await fetch(`${API_BASE_URL}/api/alumnos`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          grado: parseInt(formData.grado, 10),
+          telefono: parseInt(formData.telefono, 10),
+          telefonod: parseInt(formData.telefonod, 10),
+          telefonot: parseInt(formData.telefonot, 10),
+        })
       });
 
+      if (!response.ok) throw new Error('Error al agregar el alumno');
+
       alert('Alumno agregado exitosamente');
-      // Restablecemos el formulario
       setFormData({
-        apellido_materno: '',
-        apellido_paterno: '',
-        asesor: '',
+        nombre: '',
+        apepa: '',
+        apemat: '',
+        domicilio: '',
+        padre: '',
+        parentezco: '',
+        telefono: '',
+        telefonod: '',
         grado: '',
         grupo: '',
-        imagen: '',
-        incidencias: '',
-        nombre: '',
-        turno: ''
+        turno: '',
+        telefonot: ''
       });
     } catch (error) {
       console.error('Error agregando el alumno: ', error);
       alert('Hubo un error al agregar el alumno');
     } finally {
-      setLoading(false);  // Terminamos el indicador de carga
+      setLoading(false);
     }
   };
 
@@ -78,22 +85,64 @@ function AddStudentForm() {
         />
         <input
           type="text"
-          name="apellido_paterno"
-          value={formData.apellido_paterno}
+          name="apepa"
+          value={formData.apepa}
           onChange={handleChange}
           placeholder="Apellido Paterno"
           required
         />
         <input
           type="text"
-          name="apellido_materno"
-          value={formData.apellido_materno}
+          name="apemat"
+          value={formData.apemat}
           onChange={handleChange}
           placeholder="Apellido Materno"
           required
         />
-
-        {/* Campo limitado para Grado */}
+        <input
+          type="text"
+          name="domicilio"
+          value={formData.domicilio}
+          onChange={handleChange}
+          placeholder="Domicilio"
+          required
+        />
+        <input
+          type="text"
+          name="padre"
+          value={formData.padre}
+          onChange={handleChange}
+          placeholder="Padre"
+          required
+        />
+        <select
+          name="parentezco"
+          value={formData.parentezco}
+          onChange={handleChange}
+          className="form-select"
+          required
+        >
+          <option value="">Seleccionar Parentezco</option>
+          <option value="Padre">Padre</option>
+          <option value="Madre">Madre</option>
+          <option value="Tutor">Tutor</option>
+        </select>
+        <input
+          type="number"
+          name="telefono"
+          value={formData.telefono}
+          onChange={handleChange}
+          placeholder="Teléfono"
+          required
+        />
+        <input
+          type="number"
+          name="telefonod"
+          value={formData.telefonod}
+          onChange={handleChange}
+          placeholder="Teléfono de emergencia"
+          required
+        />
         <select
           name="grado"
           value={formData.grado}
@@ -102,12 +151,10 @@ function AddStudentForm() {
           required
         >
           <option value="">Seleccionar Grado</option>
-          <option value="Primero">Primero</option>
-          <option value="Segundo">Segundo</option>
-          <option value="Tercero">Tercero</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
         </select>
-
-        {/* Campo limitado para Grupo */}
         <select
           name="grupo"
           value={formData.grupo}
@@ -119,8 +166,6 @@ function AddStudentForm() {
           <option value="A">A</option>
           <option value="B">B</option>
         </select>
-
-        {/* Campo limitado para Turno */}
         <select
           name="turno"
           value={formData.turno}
@@ -132,29 +177,12 @@ function AddStudentForm() {
           <option value="Matutino">Matutino</option>
           <option value="Vespertino">Vespertino</option>
         </select>
-
         <input
-          type="text"
-          name="asesor"
-          value={formData.asesor}
+          type="number"
+          name="telefonot"
+          value={formData.telefonot}
           onChange={handleChange}
-          placeholder="Asesor"
-          required
-        />
-        <input
-          type="text"
-          name="incidencias"
-          value={formData.incidencias}
-          onChange={handleChange}
-          placeholder="Incidencias"
-          required
-        />
-        <input
-          type="text"
-          name="imagen"
-          value={formData.imagen}
-          onChange={handleChange}
-          placeholder="URL Imagen"
+          placeholder="Teléfono del Tutor"
           required
         />
         <button type="submit" className="btn btn-primary" disabled={loading}>

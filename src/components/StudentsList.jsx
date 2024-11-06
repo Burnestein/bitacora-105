@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { db } from '../firebase-config';
-import { collection, getDocs } from 'firebase/firestore';
+import React, { useState, useEffect, useContext } from 'react';
+import { ConfigContext } from './ConfigContext';  // Importa el contexto
 
 function StudentsList({ onStudentSelect }) {
+  const { apiUrl } = useContext(ConfigContext);  // Obtén apiUrl desde el contexto
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,59 +13,54 @@ function StudentsList({ onStudentSelect }) {
     turno: ''
   });
 
-  const loadStudentsFromFirestore = async () => {
-    try {
-      const studentsCollection = collection(db, 'alumnos');
-      const studentSnapshot = await getDocs(studentsCollection);
-      const studentsList = studentSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-
-      const sortedStudents = studentsList.sort((a, b) => {
-        const fullNameA = `${a.apellido_paterno} ${a.apellido_materno}`;
-        const fullNameB = `${b.apellido_paterno} ${b.apellido_materno}`;
-        return fullNameA.localeCompare(fullNameB);
-      });
-
-      setStudents(sortedStudents);
-      setFilteredStudents(sortedStudents);  // Inicialmente, la lista filtrada es la misma
-      setLoading(false);
-    } catch (error) {
-      console.error("Error loading students: ", error);
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    loadStudentsFromFirestore();
-  }, []);
+    const fetchFromServer = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/api/alumnos`);
+        if (!response.ok) throw new Error('Server request failed');
+        const data = await response.json();
+        
+        const studentsList = data.map((student) => ({
+          id: student.id,
+          nombre: student.nombre,
+          apellido_paterno: student.apepa,
+          apellido_materno: student.apemat,
+          grado: student.grado,
+          grupo: student.grupo,
+          turno: student.turno,
+        }));
+        
+        const sortedStudents = studentsList.sort((a, b) => {
+          const fullNameA = `${a.apellido_paterno} ${a.apellido_materno}`;
+          const fullNameB = `${b.apellido_paterno} ${b.apellido_materno}`;
+          return fullNameA.localeCompare(fullNameB);
+        });
+
+        setStudents(sortedStudents);
+        setFilteredStudents(sortedStudents);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error obteniendo datos del servidor:", error);
+        setLoading(false);
+      }
+    };
+    fetchFromServer();
+  }, [apiUrl]);  // Vuelve a hacer fetch si apiUrl cambia
 
   const handleSearch = () => {
     const lowercasedTerm = searchTerm.toLowerCase();
-
-    const filtered = students.filter(student => {
+    const filtered = students.filter((student) => {
       const fullName = `${student.apellido_paterno} ${student.apellido_materno}, ${student.nombre}`.toLowerCase();
-
-      // Verifica que coincida con el término de búsqueda y los filtros seleccionados
       const matchesSearchTerm = fullName.includes(lowercasedTerm);
       const matchesGrado = filters.grado ? student.grado === filters.grado : true;
       const matchesGrupo = filters.grupo ? student.grupo === filters.grupo : true;
       const matchesTurno = filters.turno ? student.turno === filters.turno : true;
-
-      // Solo incluir si coinciden todos los criterios
       return matchesSearchTerm && matchesGrado && matchesGrupo && matchesTurno;
     });
 
     setFilteredStudents(filtered);
-
-    // Limpia los campos de búsqueda y filtros
-    setSearchTerm('');  // Limpia el campo de búsqueda
-    setFilters({
-      grado: '',
-      grupo: '',
-      turno: ''
-    });  // Limpia los filtros
+    setSearchTerm('');
+    setFilters({ grado: '', grupo: '', turno: '' });
   };
 
   const handleFilterChange = (e) => {
@@ -86,8 +81,6 @@ function StudentsList({ onStudentSelect }) {
   return (
     <div className="students-list">
       <h2>Lista de Alumnos</h2>
-
-      {/* Buscador */}
       <div className="search-bar mb-3">
         <input
           type="text"
@@ -97,51 +90,29 @@ function StudentsList({ onStudentSelect }) {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-
-      {/* Filtros */}
       <div className="filters mb-3">
-        <select
-          name="grado"
-          className="form-select mb-2"
-          value={filters.grado}
-          onChange={handleFilterChange}
-        >
+        <select name="grado" className="form-select mb-2" value={filters.grado} onChange={handleFilterChange}>
           <option value="">Todos los grados</option>
           <option value="Primero">Primero</option>
           <option value="Segundo">Segundo</option>
           <option value="Tercero">Tercero</option>
         </select>
-
-        <select
-          name="grupo"
-          className="form-select mb-2"
-          value={filters.grupo}
-          onChange={handleFilterChange}
-        >
+        <select name="grupo" className="form-select mb-2" value={filters.grupo} onChange={handleFilterChange}>
           <option value="">Todos los grupos</option>
           <option value="A">A</option>
           <option value="B">B</option>
         </select>
-
-        <select
-          name="turno"
-          className="form-select mb-2"
-          value={filters.turno}
-          onChange={handleFilterChange}
-        >
+        <select name="turno" className="form-select mb-2" value={filters.turno} onChange={handleFilterChange}>
           <option value="">Todos los turnos</option>
           <option value="Matutino">Matutino</option>
           <option value="Vespertino">Vespertino</option>
         </select>
-
         <button className="btn btn-primary" onClick={handleSearch}>Buscar</button>
       </div>
-
-      {/* Lista filtrada */}
       <ul>
         {filteredStudents.map((student) => (
           <li key={student.id}>
-            <button onClick={() => onStudentSelect(student)}>
+            <button onClick={() => onStudentSelect(student.id)}>
               {`${student.apellido_paterno} ${student.apellido_materno}, ${student.nombre}`}
             </button>
           </li>

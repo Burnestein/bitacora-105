@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import StudentsList from './StudentsList';
 import StudentDetails from './StudentDetails';
-import AddStudentForm from './AddStudentForm';  // Importamos el formulario para agregar alumnos
+import AddStudentForm from './AddStudentForm';
+import ConfigWindow from './ConfigWindow';
 
 function MainContent({ view }) {
-  const [selectedStudent, setSelectedStudent] = useState(null);  // Estado para el alumno seleccionado
+  const [selectedStudentId, setSelectedStudentId] = useState(null);
+  const [apiUrl, setApiUrl] = useState('http://18.119.213.232:3001'); // Estado para la URL de la API
 
   useEffect(() => {
-    // Cuando la vista cambie desde el Sidebar, restablece el alumno seleccionado
-    setSelectedStudent(null);
+    setSelectedStudentId(null);
   }, [view]);
 
-  const handleStudentSelect = (student) => {
-    setSelectedStudent(student);  // Establece el alumno seleccionado
-  };
-
-  // Función para actualizar el estudiante en el estado de `MainContent`
-  const handleUpdateStudent = (updatedStudent) => {
-    setSelectedStudent(updatedStudent);  // Actualiza el alumno con los datos más recientes
+  const handleStudentSelect = (studentId) => {
+    setSelectedStudentId(studentId);
   };
 
   return (
@@ -28,17 +24,21 @@ function MainContent({ view }) {
           <p>Bienvenido a la bitácora de incidencias.</p>
         </div>
       )}
-      
-      {view === 'Lista de Alumnos' && !selectedStudent && (
-        <StudentsList onStudentSelect={handleStudentSelect} />  // Lista de Alumnos
+
+      {view === 'Lista de Alumnos' && !selectedStudentId && (
+        <StudentsList onStudentSelect={handleStudentSelect} apiUrl={apiUrl} />
       )}
 
-      {selectedStudent && (
-        <StudentDetails student={selectedStudent} onUpdateStudent={handleUpdateStudent} />  // Detalles del Alumno con la función para actualizar
+      {selectedStudentId && (
+        <StudentDetails studentId={selectedStudentId} apiUrl={apiUrl} onUpdateStudent={() => setSelectedStudentId(null)} />
       )}
 
       {view === 'Agregar Alumno' && (
-        <AddStudentForm />  // Ahora cargamos el formulario de agregar alumno
+        <AddStudentForm apiUrl={apiUrl} />
+      )}
+
+      {view === 'Configuración' && (
+        <ConfigWindow apiUrl={apiUrl} setApiUrl={setApiUrl} />  // Cargar ventana de configuración
       )}
     </div>
   );
