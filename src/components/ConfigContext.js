@@ -6,10 +6,11 @@ export const ConfigContext = createContext();
 
 // Proveedor del contexto que comparte `apiUrl` y `setApiUrl`
 export const ConfigProvider = ({ children }) => {
-  const [apiUrl, setApiUrl] = useState('https://escuelasecundaria105.uno'); // Nuevo valor inicial con HTTPS
+  const [isProduction, setIsProduction] = useState(true); // Estado para el modo
+  const apiUrl = isProduction ? 'https://escuelasecundaria105.uno' : 'http://localhost:3001'; // Selección de URL
 
   return (
-    <ConfigContext.Provider value={{ apiUrl, setApiUrl }}>
+    <ConfigContext.Provider value={{ apiUrl, setIsProduction }}>
       {children}
     </ConfigContext.Provider>
   );

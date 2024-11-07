@@ -1,31 +1,26 @@
 // ConfigWindow.jsx
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { ConfigContext } from './ConfigContext'; // Importar el contexto
 
 function ConfigWindow() {
-  const { apiUrl, setApiUrl } = useContext(ConfigContext); // Usar el contexto
-  const [newApiUrl, setNewApiUrl] = useState(apiUrl);
+  const { apiUrl, setIsProduction } = useContext(ConfigContext); // Usar el contexto
 
-  const handleSave = () => {
-    setApiUrl(newApiUrl); // Actualizar `apiUrl` en el contexto
-    alert('Configuración guardada exitosamente');
+  const handleToggleMode = (e) => {
+    setIsProduction(e.target.value === "production");
+    alert(`Configuración cambiada a ${e.target.value === "production" ? "Producción" : "Pruebas"}`);
   };
 
   return (
     <div className="config-window">
       <h2>Configuración</h2>
       <div>
-        <label>API URL:</label>
-        <input
-          type="text"
-          value={newApiUrl}
-          onChange={(e) => setNewApiUrl(e.target.value)}
-          placeholder="Ingrese la IP o URL del servidor"
-        />
+        <label>Modo:</label>
+        <select onChange={handleToggleMode} defaultValue={apiUrl.includes('escuelasecundaria105.uno') ? "production" : "testing"}>
+          <option value="production">Producción</option>
+          <option value="testing">Pruebas</option>
+        </select>
       </div>
-      <button className="btn btn-primary" onClick={handleSave}>
-        Guardar Cambios
-      </button>
+      <p>API URL actual: {apiUrl}</p>
     </div>
   );
 }

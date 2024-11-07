@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-
-const API_BASE_URL = 'http://18.119.213.232:3001';
+import React, { useState, useContext } from 'react';
+import { ConfigContext } from './ConfigContext';  // Importa el contexto
 
 function AddStudentForm() {
+  const { apiUrl } = useContext(ConfigContext);  // Obtén apiUrl desde el contexto
   const [formData, setFormData] = useState({
     nombre: '',
     apepa: '',
@@ -29,12 +29,12 @@ function AddStudentForm() {
     });
   };
 
-  // Función para enviar el formulario a la API en AWS
+  // Función para enviar el formulario a la API
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/alumnos`, {
+      const response = await fetch(`${apiUrl}/api/alumnos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
