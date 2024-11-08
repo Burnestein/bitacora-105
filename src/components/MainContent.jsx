@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import StudentsList from './StudentsList';
+import TeacherList from './TeacherList'; // Importa el componente TeacherList
 import StudentDetails from './StudentDetails';
 import AddStudentForm from './AddStudentForm';
+import AddTeacherForm from './AddTeacherForm';
 import ConfigWindow from './ConfigWindow';
 
 function MainContent({ view }) {
   const [selectedStudentId, setSelectedStudentId] = useState(null);
-  const [apiUrl, setApiUrl] = useState('http://18.119.213.232:3001'); // Estado para la URL de la API
+  const [apiUrl, setApiUrl] = useState('https://escuelasecundaria105.uno/'); // Estado para la URL de la API
 
   useEffect(() => {
     setSelectedStudentId(null);
@@ -29,12 +31,20 @@ function MainContent({ view }) {
         <StudentsList onStudentSelect={handleStudentSelect} apiUrl={apiUrl} />
       )}
 
+      {view === 'Lista de Profesores' && (
+        <TeacherList apiUrl={apiUrl} />
+      )}
+
       {selectedStudentId && (
         <StudentDetails studentId={selectedStudentId} apiUrl={apiUrl} onUpdateStudent={() => setSelectedStudentId(null)} />
       )}
 
       {view === 'Agregar Alumno' && (
         <AddStudentForm apiUrl={apiUrl} />
+      )}
+
+      {view === 'Agregar Profesor' && (
+        <AddTeacherForm apiUrl={apiUrl} />
       )}
 
       {view === 'Configuración' && (
