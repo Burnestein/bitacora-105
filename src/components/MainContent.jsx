@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import StudentsList from './StudentsList';
-import TeacherList from './TeacherList'; // Importa el componente TeacherList
+import TeacherList from './TeacherList';
 import StudentDetails from './StudentDetails';
+import TeacherDetails from './TeacherDetails';
 import AddStudentForm from './AddStudentForm';
 import AddTeacherForm from './AddTeacherForm';
 import ConfigWindow from './ConfigWindow';
 
 function MainContent({ view }) {
   const [selectedStudentId, setSelectedStudentId] = useState(null);
-  const [apiUrl, setApiUrl] = useState('https://escuelasecundaria105.uno/'); // Estado para la URL de la API
+  const [selectedTeacherId, setSelectedTeacherId] = useState(null);
+  const [apiUrl, setApiUrl] = useState('https://escuelasecundaria105.uno/');
 
   useEffect(() => {
     setSelectedStudentId(null);
+    setSelectedTeacherId(null);
   }, [view]);
 
   const handleStudentSelect = (studentId) => {
     setSelectedStudentId(studentId);
+  };
+
+  const handleTeacherSelect = (teacherId) => {
+    setSelectedTeacherId(teacherId);
   };
 
   return (
@@ -31,12 +38,16 @@ function MainContent({ view }) {
         <StudentsList onStudentSelect={handleStudentSelect} apiUrl={apiUrl} />
       )}
 
-      {view === 'Lista de Profesores' && (
-        <TeacherList apiUrl={apiUrl} />
-      )}
-
       {selectedStudentId && (
         <StudentDetails studentId={selectedStudentId} apiUrl={apiUrl} onUpdateStudent={() => setSelectedStudentId(null)} />
+      )}
+
+      {view === 'Lista de Profesores' && !selectedTeacherId && (
+        <TeacherList onTeacherSelect={handleTeacherSelect} apiUrl={apiUrl} />
+      )}
+
+      {selectedTeacherId && (
+        <TeacherDetails teacherId={selectedTeacherId} apiUrl={apiUrl} onUpdateTeacher={() => setSelectedTeacherId(null)} />
       )}
 
       {view === 'Agregar Alumno' && (
@@ -48,7 +59,7 @@ function MainContent({ view }) {
       )}
 
       {view === 'Configuración' && (
-        <ConfigWindow apiUrl={apiUrl} setApiUrl={setApiUrl} />  // Cargar ventana de configuración
+        <ConfigWindow apiUrl={apiUrl} setApiUrl={setApiUrl} />
       )}
     </div>
   );
