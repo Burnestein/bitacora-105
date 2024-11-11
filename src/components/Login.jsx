@@ -1,18 +1,40 @@
 import React, { useState } from 'react';
-import '../css/Login.css'
+import '../css/Login.css';
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
-  const handleLogin = () => {
-    onLogin();  // Llama a la función que cambia la vista al Dashboard
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('https://escuelasecundaria105.uno/api/usuarios/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ usuario: email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Guarda el token en localStorage y llama a onLogin para cambiar la vista al Dashboard
+        localStorage.setItem('token', data.token);
+        onLogin();  // Cambia al Dashboard
+      } else {
+        setError(data.error || 'Error en el inicio de sesión');
+      }
+    } catch (error) {
+      console.error('Error de conexión:', error);
+      setError('Error de conexión');
+    }
   };
 
   return (
     <div className="login">
       <h2>Iniciar Sesión</h2>
-      <form>
+      <form onSubmit={(e) => e.preventDefault()}>
         <div>
           <label htmlFor="email">Correo Electrónico</label>
           <input
@@ -35,6 +57,7 @@ function Login({ onLogin }) {
             required
           />
         </div>
+        {error && <p className="error-message">{error}</p>}
         <div>
           <button type="button" onClick={handleLogin}>Iniciar Sesión</button>
           <button type="button">Registrarse</button>
