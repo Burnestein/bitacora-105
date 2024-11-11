@@ -144,6 +144,18 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               <option value="Vespertino">Vespertino</option>
             </select>
           </div>
+          <div>
+            <label>Teléfono:</label>
+            <input type="text" name="telefono" value={editedData.telefono} onChange={handleChange} />
+          </div>
+          <div>
+            <label>Teléfono del Padre:</label>
+            <input type="text" name="telefonod" value={editedData.telefonod} onChange={handleChange} />
+          </div>
+          <div>
+            <label>Teléfono del Tutor:</label>
+            <input type="text" name="telefonot" value={editedData.telefonot} onChange={handleChange} />
+          </div>
           <button onClick={handleSave} disabled={loading}>
             {loading ? 'Guardando...' : 'Guardar'}
           </button>
@@ -159,6 +171,9 @@ function StudentDetails({ studentId, onUpdateStudent }) {
           <p><strong>Grado:</strong> {student.grado}</p>
           <p><strong>Grupo:</strong> {student.grupo}</p>
           <p><strong>Turno:</strong> {student.turno}</p>
+          <p><strong>Teléfono:</strong> {student.telefono}</p>
+          <p><strong>Teléfono del Padre:</strong> {student.telefonod}</p>
+          <p><strong>Teléfono del Tutor:</strong> {student.telefonot}</p>
           <button onClick={() => setIsEditing(true)}>
             Editar
           </button>
