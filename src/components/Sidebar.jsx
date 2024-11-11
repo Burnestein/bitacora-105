@@ -4,6 +4,7 @@ import '../css/Sidebar.css';
 function Sidebar({ setView, userImage }) {
     // Lee el rol del usuario desde localStorage
     const userRole = localStorage.getItem('rol');
+    const nombreUsuario = localStorage.getItem('nombreUsuario');
 
     return (
         <div className="sidebar">
@@ -12,7 +13,7 @@ function Sidebar({ setView, userImage }) {
                 alt="User Profile" 
                 className="img-fluid rounded-circle user-image" 
             />
-            <label className="user-name-label">Nombre del Usuario</label> {/* Label para el nombre del usuario */}
+            <label className="user-name-label">{nombreUsuario || 'Nombre del Usuario'}</label>
 
             {userRole === 'admin' && (
                 <>
