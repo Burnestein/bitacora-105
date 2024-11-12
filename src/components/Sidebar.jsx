@@ -1,10 +1,18 @@
 import React from 'react';
 import '../css/Sidebar.css';
 
-function Sidebar({ setView, userImage }) {
+function Sidebar({ setView, userImage, onLogout }) {
     // Lee el rol del usuario desde localStorage
     const userRole = localStorage.getItem('rol');
     const nombreUsuario = localStorage.getItem('nombreUsuario');
+
+    // Función para manejar el cierre de sesión
+    const handleLogout = () => {
+        localStorage.removeItem('token'); // Elimina el token de sesión
+        localStorage.removeItem('rol'); // Elimina el rol del usuario
+        localStorage.removeItem('nombreUsuario'); // Elimina el nombre del usuario
+        onLogout(); // Llama a la función onLogout para redirigir al inicio de sesión
+    };
 
     return (
         <div className="sidebar">
@@ -41,12 +49,12 @@ function Sidebar({ setView, userImage }) {
 
             {userRole === 'usuario' && (
                 <>
-                <button className="btn btn-primary option-button" onClick={() => setView('Lista de Alumnos')}>Lista de Alumnos</button> 
+                    <button className="btn btn-primary option-button" onClick={() => setView('Lista de Alumnos')}>Lista de Alumnos</button> 
                 </>
             )}
 
             <div className="col-auto">
-                <button className="btn btn-danger logout-button">Cerrar Sesión</button>
+                <button className="btn btn-danger logout-button" onClick={handleLogout}>Cerrar Sesión</button>
             </div>
         </div>
     );

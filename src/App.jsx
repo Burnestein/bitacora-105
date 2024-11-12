@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Dashboard from './components/Dashboard';  // Dashboard cargará el Sidebar, Header, etc.
+import Dashboard from './components/Dashboard';
 import Login from './components/Login';
-import { ConfigProvider } from './components/ConfigContext'; // Importa ConfigProvider
+import { ConfigProvider } from './components/ConfigContext';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -11,11 +11,15 @@ function App() {
     setIsAuthenticated(true);
   };
 
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
+
   return (
     <div className="App">
       <ConfigProvider>
         {isAuthenticated ? (
-          <Dashboard />
+          <Dashboard onLogout={handleLogout} />
         ) : (
           <Login onLogin={handleLogin} />
         )}
