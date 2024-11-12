@@ -20,6 +20,7 @@ function Sidebar({ setView, userImage }) {
                     <button className="btn btn-primary option-button" onClick={() => setView('Inicio')}>Inicio</button>
                     <button className="btn btn-primary option-button" onClick={() => setView('Lista de Alumnos')}>Lista de Alumnos</button>
                     <button className="btn btn-primary option-button" onClick={() => setView('Agregar Alumno')}>Agregar Alumno</button>
+                    <button className="btn btn-primary option-button" onClick={() => setView('Agregar Usuario')}>Agregar Usuario</button>
                     <button className="btn btn-primary option-button" onClick={() => setView('Lista de Profesores')}>Lista de Profesores</button>
                     <button className="btn btn-primary option-button" onClick={() => setView('Agregar Profesor')}>Agregar Profesor</button>
                 </>

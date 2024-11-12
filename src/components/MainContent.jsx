@@ -6,6 +6,7 @@ import TeacherDetails from './TeacherDetails';
 import AddStudentForm from './AddStudentForm';
 import AddTeacherForm from './AddTeacherForm';
 import ConfigWindow from './ConfigWindow';
+import AddUserForm from './AddUserForm';
 
 function MainContent({ view }) {
   const [selectedStudentId, setSelectedStudentId] = useState(null);
@@ -44,6 +45,10 @@ function MainContent({ view }) {
 
       {view === 'Lista de Profesores' && !selectedTeacherId && (
         <TeacherList onTeacherSelect={handleTeacherSelect} apiUrl={apiUrl} />
+      )}
+
+      {view === 'Agregar Usuario' && (
+        <AddUserForm apiUrl={apiUrl} />
       )}
 
       {selectedTeacherId && (

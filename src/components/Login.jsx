@@ -22,7 +22,7 @@ function Login({ onLogin }) {
         // Guarda el token en localStorage y llama a onLogin para cambiar la vista al Dashboard
         localStorage.setItem('token', data.token);
         localStorage.setItem('rol', data.user.rol); // Guardamos el rol del usuario
-        localStorage.setItem('nombreUsuario', data.user.nombre);
+        localStorage.setItem('nombreUsuario', `${data.user.nombre} ${data.user.apepa}`);
         onLogin();  // Cambia al Dashboard
       } else {
         setError(data.error || 'Error en el inicio de sesión');
