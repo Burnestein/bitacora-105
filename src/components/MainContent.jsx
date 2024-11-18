@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import StudentsList from './StudentsList';
-import TeacherList from './TeacherList';
 import StudentDetails from './StudentDetails';
-import TeacherDetails from './TeacherDetails';
 import AddStudentForm from './AddStudentForm';
-import AddTeacherForm from './AddTeacherForm';
 import ConfigWindow from './ConfigWindow';
 import AddUserForm from './AddUserForm';
+import UserList from './UserList';
+import UserDetails from './UserDetails';
 
-function MainContent({ view }) {
+function MainContent({ view, setView }) { // Añadimos setView como prop
   const [selectedStudentId, setSelectedStudentId] = useState(null);
-  const [selectedTeacherId, setSelectedTeacherId] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState(null);
   const [apiUrl, setApiUrl] = useState('https://escuelasecundaria105.uno/');
 
   useEffect(() => {
     setSelectedStudentId(null);
-    setSelectedTeacherId(null);
+    setSelectedUserId(null);
   }, [view]);
 
   const handleStudentSelect = (studentId) => {
     setSelectedStudentId(studentId);
   };
 
-  const handleTeacherSelect = (teacherId) => {
-    setSelectedTeacherId(teacherId);
+  const handleUserSelect = (userId) => {
+    setSelectedUserId(userId);
   };
 
   return (
@@ -43,24 +42,20 @@ function MainContent({ view }) {
         <StudentDetails studentId={selectedStudentId} apiUrl={apiUrl} onUpdateStudent={() => setSelectedStudentId(null)} />
       )}
 
-      {view === 'Lista de Profesores' && !selectedTeacherId && (
-        <TeacherList onTeacherSelect={handleTeacherSelect} apiUrl={apiUrl} />
+      {view === 'Agregar Alumno' && (
+        <AddStudentForm apiUrl={apiUrl} />
       )}
 
       {view === 'Agregar Usuario' && (
         <AddUserForm apiUrl={apiUrl} />
       )}
 
-      {selectedTeacherId && (
-        <TeacherDetails teacherId={selectedTeacherId} apiUrl={apiUrl} onUpdateTeacher={() => setSelectedTeacherId(null)} />
+      {view === 'Lista de Usuarios' && !selectedUserId && (
+        <UserList onUserSelect={handleUserSelect} setView={setView} apiUrl={apiUrl} /> // Pasamos setView a UserList
       )}
 
-      {view === 'Agregar Alumno' && (
-        <AddStudentForm apiUrl={apiUrl} />
-      )}
-
-      {view === 'Agregar Profesor' && (
-        <AddTeacherForm apiUrl={apiUrl} />
+      {selectedUserId && (
+        <UserDetails userId={selectedUserId} apiUrl={apiUrl} onUpdateUser={() => setSelectedUserId(null)} />
       )}
 
       {view === 'Configuración' && (

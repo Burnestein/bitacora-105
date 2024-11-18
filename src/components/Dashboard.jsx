@@ -21,7 +21,7 @@ function Dashboard({ onLogout }) {  // Recibe onLogout como prop
           <Sidebar setView={setCurrentView} onLogout={onLogout} />  {/* Pasa onLogout a Sidebar */}
         </div>
         <div className='col-12 col-md-9 main-content-container'>
-          <MainContent view={currentView} />
+          <MainContent view={currentView} setView={setCurrentView} />  {/* Pasa setView a MainContent */}
         </div>
       </div>
     </div>

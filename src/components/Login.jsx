@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import RegisterUser from './RegisterUser'; // Importa el componente de registro
 import '../css/Login.css';
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [showRegister, setShowRegister] = useState(false); // Estado para alternar entre login y registro
 
   const handleLogin = async () => {
     try {
@@ -19,10 +21,12 @@ function Login({ onLogin }) {
       const data = await response.json();
 
       if (response.ok) {
-        // Guarda el token en localStorage y llama a onLogin para cambiar la vista al Dashboard
+        // Guarda el token y otros datos en localStorage
         localStorage.setItem('token', data.token);
         localStorage.setItem('rol', data.user.rol); // Guardamos el rol del usuario
         localStorage.setItem('nombreUsuario', `${data.user.nombre} ${data.user.apepa}`);
+        localStorage.setItem('usuario_id', data.user.id);
+        localStorage.setItem('usuario', data.user.usuario);
         onLogin();  // Cambia al Dashboard
       } else {
         setError(data.error || 'Error en el inicio de sesión');
@@ -33,7 +37,9 @@ function Login({ onLogin }) {
     }
   };
 
-  return (
+  return showRegister ? (
+    <RegisterUser onCancel={() => setShowRegister(false)} /> // Muestra el formulario de registro si está activo
+  ) : (
     <div className="login">
       <h2>Iniciar Sesión</h2>
       <form onSubmit={(e) => e.preventDefault()}>
@@ -62,7 +68,7 @@ function Login({ onLogin }) {
         {error && <p className="error-message">{error}</p>}
         <div>
           <button type="button" onClick={handleLogin}>Iniciar Sesión</button>
-          <button type="button">Registrarse</button>
+          <button type="button" onClick={() => setShowRegister(true)}>Registrarse</button> {/* Activa el formulario de registro */}
         </div>
       </form>
     </div>
