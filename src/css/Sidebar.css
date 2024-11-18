@@ -21,49 +21,57 @@
   width: 40px;
   aspect-ratio: 1; /* Mantiene la proporción para que siempre sea un círculo */
   object-fit: cover;
-  margin-bottom: 20px;
   border: 3px solid #353535;
   border-radius: 50%; /* Forma circular asegurada */
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  transition: width 0.3s, margin-bottom 0.3s; /* Animación suave */
+  margin: 0 auto 10px; /* Menos espacio debajo para acercar el nombre */
+  transition: width 0.3s, margin-bottom 0.3s;
 }
 
 .sidebar.expanded .user-image {
   width: 80px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .user-name-label {
-  display: none; /* Oculto cuando está contraído */
+  display: none;
 }
 
 .sidebar.expanded .user-name-label {
-  display: block; /* Mostrar nombre de usuario cuando está expandido */
-  margin-top: 10px;
+  display: block;
+  margin-top: 5px; /* Espacio reducido */
   font-weight: bold;
   color: #333;
 }
 
 .option-button {
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #518B10;
-  color: white;
+  padding: 10px 0; /* Elimina padding lateral para estilo minimalista */
+  background-color: transparent;
+  color: #333;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
   display: flex;
-  justify-content: center;
   align-items: center;
+  width: 100%;
+  border-top: 1px solid #e0e0e0; /* Línea superior delgada */
+  border-bottom: 1px solid #e0e0e0; /* Línea inferior delgada */
+  transition: background-color 0.3s;
   gap: 10px;
-  transition: padding 0.3s;
+  justify-content: center;
 }
 
 .sidebar.expanded .option-button {
   justify-content: flex-start;
   padding-left: 20px;
+}
+
+.option-button:hover {
+  background-color: #f0f0f0; /* Color de fondo al pasar el cursor */
+}
+
+.option-button .option-icon {
+  font-size: 1.2em;
+  color: #666; /* Color de icono */
 }
 
 .option-button .option-text {
@@ -72,16 +80,23 @@
 
 .sidebar.expanded .option-button .option-text {
   display: inline;
+  color: #333;
+  font-weight: 500;
 }
 
 .logout-button {
-  padding: 10px;
-  background-color: #dc3545;
-  color: white;
+  padding: 10px 0;
+  background-color: transparent;
+  color: #dc3545;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
+  border-top: 1px solid #e0e0e0;
   margin-top: auto;
+  width: 100%;
+}
+
+.logout-button:hover {
+  background-color: #f8d7da; /* Fondo gris claro para el botón de cerrar sesión */
 }
 
 .toggle-button {
@@ -96,5 +111,5 @@
 }
 
 .sidebar.expanded .toggle-button {
-  transform: rotate(180deg); /* Rotación para indicar el estado expandido */
+  transform: rotate(180deg);
 }

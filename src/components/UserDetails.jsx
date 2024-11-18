@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ConfigContext } from './ConfigContext';
+import '../css/UserDetails.css';
 
 function UserDetails({ userId, onUpdateUser }) {
   const { apiUrl } = useContext(ConfigContext);
@@ -11,7 +12,6 @@ function UserDetails({ userId, onUpdateUser }) {
   const [studentCode, setStudentCode] = useState('');
   const [relatedStudents, setRelatedStudents] = useState([]);
 
-  // Fetch user details and related students from API
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -39,13 +39,11 @@ function UserDetails({ userId, onUpdateUser }) {
     fetchRelatedStudents();
   }, [userId, apiUrl]);
 
-  // Handle input changes for editing
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedData({ ...editedData, [name]: value });
   };
 
-  // Save changes to the user
   const handleSave = async () => {
     setLoading(true);
     try {
@@ -67,13 +65,11 @@ function UserDetails({ userId, onUpdateUser }) {
     }
   };
 
-  // Cancel editing
   const handleCancel = () => {
     setEditedData({ ...user });
     setIsEditing(false);
   };
 
-  // Handle adding a new student relation
   const handleAddStudent = async () => {
     if (!studentCode.trim()) return;
 
@@ -89,7 +85,6 @@ function UserDetails({ userId, onUpdateUser }) {
       setShowAddStudent(false);
       alert("Relación con alumno agregada exitosamente");
 
-      // Refetch related students after adding a new one
       const updatedRelatedStudents = await response.json();
       setRelatedStudents([...relatedStudents, updatedRelatedStudents]);
     } catch (error) {
@@ -97,7 +92,6 @@ function UserDetails({ userId, onUpdateUser }) {
     }
   };
 
-  // Handle removing a student relation
   const handleRemoveStudent = async (codigo_alumno) => {
     try {
       const response = await fetch(`${apiUrl}/api/usuarios/${userId}/alumnos/${codigo_alumno}`, {
@@ -107,7 +101,6 @@ function UserDetails({ userId, onUpdateUser }) {
       if (!response.ok) throw new Error('Error removing student relation');
       alert("Relación con alumno eliminada exitosamente");
 
-      // Refetch related students after removing one
       setRelatedStudents(relatedStudents.filter(student => student.codigo_alumno !== codigo_alumno));
     } catch (error) {
       console.error("Error removing student relation:", error);
@@ -126,43 +119,43 @@ function UserDetails({ userId, onUpdateUser }) {
 
       {isEditing ? (
         <>
-          <div>
+          <div className="user-info-field">
             <label>Nombre:</label>
-            <input type="text" name="nombre" value={editedData.nombre} onChange={handleChange} />
+            <input type="text" name="nombre" value={editedData.nombre} onChange={handleChange} className="form-control" />
           </div>
-          <div>
+          <div className="user-info-field">
             <label>Apellido Paterno:</label>
-            <input type="text" name="apepa" value={editedData.apepa} onChange={handleChange} />
+            <input type="text" name="apepa" value={editedData.apepa} onChange={handleChange} className="form-control" />
           </div>
-          <div>
+          <div className="user-info-field">
             <label>Apellido Materno:</label>
-            <input type="text" name="apemat" value={editedData.apemat} onChange={handleChange} />
+            <input type="text" name="apemat" value={editedData.apemat} onChange={handleChange} className="form-control" />
           </div>
-          <div>
+          <div className="user-info-field">
             <label>Usuario:</label>
-            <input type="text" name="usuario" value={editedData.usuario} onChange={handleChange} />
+            <input type="text" name="usuario" value={editedData.usuario} onChange={handleChange} className="form-control" />
           </div>
-          <div>
+          <div className="user-info-field">
             <label>Correo:</label>
-            <input type="email" name="correo" value={editedData.correo} onChange={handleChange} />
+            <input type="email" name="correo" value={editedData.correo} onChange={handleChange} className="form-control" />
           </div>
-          <div>
+          <div className="user-info-field">
             <label>Rol:</label>
-            <select name="rol" value={editedData.rol} onChange={handleChange}>
+            <select name="rol" value={editedData.rol} onChange={handleChange} className="form-select">
               <option value="admin">Administrador</option>
               <option value="profesor">Profesor</option>
               <option value="usuario">Usuario</option>
             </select>
           </div>
-          <div>
+          <div className="user-info-field">
             <label>Estado:</label>
-            <select name="activo" value={editedData.activo ? 'true' : 'false'} onChange={handleChange}>
+            <select name="activo" value={editedData.activo ? 'true' : 'false'} onChange={handleChange} className="form-select">
               <option value="true">Activo</option>
               <option value="false">Inactivo</option>
             </select>
           </div>
-          <button onClick={handleSave} disabled={loading}>Guardar</button>
-          <button onClick={handleCancel}>Cancelar</button>
+          <button onClick={handleSave} disabled={loading} className="btn btn-success">Guardar</button>
+          <button onClick={handleCancel} className="btn btn-danger">Cancelar</button>
         </>
       ) : (
         <>
@@ -173,34 +166,35 @@ function UserDetails({ userId, onUpdateUser }) {
           <p><strong>Correo:</strong> {user.correo}</p>
           <p><strong>Rol:</strong> {user.rol}</p>
           <p><strong>Estado:</strong> {user.activo ? 'Activo' : 'Inactivo'}</p>
-          <button onClick={() => setIsEditing(true)}>Editar</button>
+          <button onClick={() => setIsEditing(true)} className="btn btn-warning">Editar</button>
         </>
       )}
 
-      {/* Add Student Relationship Section */}
       <h3>Agregar Relación con Alumno</h3>
       {showAddStudent ? (
-        <div>
+        <div className="add-student-form">
           <input
             type="text"
             placeholder="Código de Estudiante"
             value={studentCode}
             onChange={(e) => setStudentCode(e.target.value)}
+            className="form-control"
           />
-          <button onClick={handleAddStudent}>Aceptar</button>
-          <button onClick={() => setShowAddStudent(false)}>Cancelar</button>
+          <button onClick={handleAddStudent} className="btn btn-primary">Aceptar</button>
+          <button onClick={() => setShowAddStudent(false)} className="btn btn-secondary">Cancelar</button>
         </div>
       ) : (
-        <button onClick={() => setShowAddStudent(true)}>Relacionar Alumno</button>
+        <button onClick={() => setShowAddStudent(true)} className="btn btn-primary">Relacionar Alumno</button>
       )}
 
-      {/* Related Students Section */}
       <h3>Alumnos Relacionados</h3>
-      <ul>
+      <ul className="related-students-list">
         {relatedStudents.map(student => (
-          <li key={student.codigo_alumno}>
+          <li key={student.codigo_alumno} className="related-student-item">
             {`${student.nombre} ${student.apepa} (${student.codigo_alumno})`}
-            <button onClick={() => handleRemoveStudent(student.codigo_alumno)}>Eliminar</button>
+            <button onClick={() => handleRemoveStudent(student.codigo_alumno)} className="btn btn-danger btn-sm">
+              Eliminar
+            </button>
           </li>
         ))}
       </ul>

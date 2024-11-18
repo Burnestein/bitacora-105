@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ConfigContext } from './ConfigContext';
+import '../css/StudentDetails.css';
 
 function StudentDetails({ studentId, onUpdateStudent }) {
   const { apiUrl } = useContext(ConfigContext);
@@ -16,7 +17,6 @@ function StudentDetails({ studentId, onUpdateStudent }) {
   const userRole = localStorage.getItem('rol');
   const userId = localStorage.getItem('usuario_id');
 
-  // Fetch student details and incidencias from API
   useEffect(() => {
     const fetchStudentAndIncidencias = async () => {
       try {
@@ -41,7 +41,6 @@ function StudentDetails({ studentId, onUpdateStudent }) {
     if (studentId) fetchStudentAndIncidencias();
   }, [studentId, apiUrl]);
 
-  // Add a new incidencia
   const handleAddIncidencia = async () => {
     if (!newIncidencia.trim()) return;
 
@@ -72,7 +71,6 @@ function StudentDetails({ studentId, onUpdateStudent }) {
     }
   };
 
-  // Enable editing mode for an incidencia
   const startEditingIncidencia = (incidencia) => {
     if (incidencia.usuario_id.toString() === userId.toString()) {
       setEditingIncidencia(incidencia.id);
@@ -82,21 +80,15 @@ function StudentDetails({ studentId, onUpdateStudent }) {
     }
   };
 
-  // Cancel editing an incidencia
   const cancelEditingIncidencia = () => {
     setEditingIncidencia(null);
     setEditedIncidenciaText('');
   };
 
-  // Save edited incidencia text
   const saveEditedIncidencia = async (incidenciaId) => {
     try {
       const incidenciaToUpdate = incidencias.find((inc) => inc.id === incidenciaId);
-
-      if (!incidenciaToUpdate) {
-        console.error("Incidencia no encontrada en el estado.");
-        return;
-      }
+      if (!incidenciaToUpdate) return;
 
       const response = await fetch(`${apiUrl}/api/incidencias/${incidenciaId}`, {
         method: 'PUT',
@@ -124,7 +116,6 @@ function StudentDetails({ studentId, onUpdateStudent }) {
     }
   };
 
-  // Save edited student data
   const saveEditedData = async () => {
     setLoading(true);
     try {
@@ -136,9 +127,9 @@ function StudentDetails({ studentId, onUpdateStudent }) {
 
       if (!response.ok) throw new Error('Error updating student');
 
-      setStudent(editedData); // Update local student data
-      setIsEditing(false); // Exit edit mode
-      onUpdateStudent(); // Trigger any additional actions
+      setStudent(editedData);
+      setIsEditing(false);
+      onUpdateStudent();
     } catch (error) {
       console.error('Error updating student:', error);
     } finally {
@@ -154,7 +145,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
 
       {isEditing ? (
         <>
-          <div>
+          <div className="student-info-field">
             <label>Código de Alumno:</label>
             <input
               type="text"
@@ -162,7 +153,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               onChange={(e) => setEditedData({ ...editedData, codigo_alumno: e.target.value })}
             />
           </div>
-          <div>
+          <div className="student-info-field">
             <label>Nombre:</label>
             <input
               type="text"
@@ -170,7 +161,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               onChange={(e) => setEditedData({ ...editedData, nombre: e.target.value })}
             />
           </div>
-          <div>
+          <div className="student-info-field">
             <label>Apellido Paterno:</label>
             <input
               type="text"
@@ -178,7 +169,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               onChange={(e) => setEditedData({ ...editedData, apepa: e.target.value })}
             />
           </div>
-          <div>
+          <div className="student-info-field">
             <label>Apellido Materno:</label>
             <input
               type="text"
@@ -186,7 +177,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               onChange={(e) => setEditedData({ ...editedData, apemat: e.target.value })}
             />
           </div>
-          <div>
+          <div className="student-info-field">
             <label>Domicilio:</label>
             <input
               type="text"
@@ -194,7 +185,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               onChange={(e) => setEditedData({ ...editedData, domicilio: e.target.value })}
             />
           </div>
-          <div>
+          <div className="student-info-field">
             <label>Nombre del Padre o Tutor:</label>
             <input
               type="text"
@@ -202,7 +193,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               onChange={(e) => setEditedData({ ...editedData, padre: e.target.value })}
             />
           </div>
-          <div>
+          <div className="student-info-field">
             <label>Parentesco:</label>
             <input
               type="text"
@@ -210,7 +201,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               onChange={(e) => setEditedData({ ...editedData, parentezco: e.target.value })}
             />
           </div>
-          <div>
+          <div className="student-info-field">
             <label>Correo del Tutor:</label>
             <input
               type="email"
@@ -218,7 +209,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               onChange={(e) => setEditedData({ ...editedData, correo_tutor: e.target.value })}
             />
           </div>
-          <div>
+          <div className="student-info-field">
             <label>Teléfono:</label>
             <input
               type="text"
@@ -226,7 +217,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               onChange={(e) => setEditedData({ ...editedData, telefono: e.target.value })}
             />
           </div>
-          <div>
+          <div className="student-info-field">
             <label>Teléfono del Domicilio:</label>
             <input
               type="text"
@@ -234,7 +225,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               onChange={(e) => setEditedData({ ...editedData, telefonod: e.target.value })}
             />
           </div>
-          <div>
+          <div className="student-info-field">
             <label>Teléfono del Tutor:</label>
             <input
               type="text"
@@ -242,7 +233,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               onChange={(e) => setEditedData({ ...editedData, telefonot: e.target.value })}
             />
           </div>
-          <div>
+          <div className="student-info-field">
             <label>Grado:</label>
             <select
               value={editedData.grado}
@@ -253,7 +244,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               <option value="3">3</option>
             </select>
           </div>
-          <div>
+          <div className="student-info-field">
             <label>Grupo:</label>
             <select
               value={editedData.grupo}
@@ -265,7 +256,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               <option value="D">D</option>
             </select>
           </div>
-          <div>
+          <div className="student-info-field">
             <label>Turno:</label>
             <select
               value={editedData.turno}
@@ -276,7 +267,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
             </select>
           </div>
           {userRole === 'admin' && (
-            <div>
+            <div className="student-info-field">
               <label>Activo:</label>
               <input
                 type="checkbox"
@@ -285,8 +276,8 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               />
             </div>
           )}
-          <button onClick={saveEditedData}>Aceptar</button>
-          <button onClick={() => setIsEditing(false)}>Cancelar edición</button>
+          <button className="btn btn-success" onClick={saveEditedData}>Aceptar</button>
+          <button className="btn btn-danger" onClick={() => setIsEditing(false)}>Cancelar edición</button>
         </>
       ) : (
         <>
@@ -306,31 +297,34 @@ function StudentDetails({ studentId, onUpdateStudent }) {
           <p><strong>Turno:</strong> {student.turno}</p>
           <p><strong>Estado:</strong> {student.activo ? 'Activo' : 'Inactivo'}</p>
           {userRole === 'admin' && (
-            <button onClick={() => setIsEditing(true)}>Editar</button>
+            <button className="btn btn-warning" onClick={() => setIsEditing(true)}>Editar</button>
           )}
         </>
       )}
 
       <h3>Incidencias</h3>
-      <ul>
+      <ul className="incidencias-list">
         {incidencias.map((incidencia) => (
-          <li key={incidencia.id}>
+          <li key={incidencia.id} className="incidencia-item">
             <p><strong>Fecha:</strong> {new Date(incidencia.fecha).toLocaleString()}</p>
             {editingIncidencia === incidencia.id ? (
               <>
                 <textarea
                   value={editedIncidenciaText}
                   onChange={(e) => setEditedIncidenciaText(e.target.value)}
+                  className="form-control"
                 />
-                <button onClick={() => saveEditedIncidencia(incidencia.id)}>Guardar</button>
-                <button onClick={cancelEditingIncidencia}>Cancelar</button>
+                <button className="btn btn-success" onClick={() => saveEditedIncidencia(incidencia.id)}>Guardar</button>
+                <button className="btn btn-danger" onClick={cancelEditingIncidencia}>Cancelar</button>
               </>
             ) : (
               <>
                 <p><strong>Texto:</strong> {incidencia.texto}</p>
                 <p><strong>Creado por:</strong> {incidencia.creador}</p>
                 {incidencia.usuario_id.toString() === userId.toString() && (
-                  <button onClick={() => startEditingIncidencia(incidencia)}>Editar</button>
+                  <button className="btn btn-link edit-button" onClick={() => startEditingIncidencia(incidencia)}>
+                    <i className="fas fa-edit"></i> Editar
+                  </button>
                 )}
               </>
             )}
@@ -339,18 +333,19 @@ function StudentDetails({ studentId, onUpdateStudent }) {
       </ul>
 
       {showIncidenciaForm ? (
-        <>
+        <div className="new-incidencia-form">
           <textarea
             value={newIncidencia}
             onChange={(e) => setNewIncidencia(e.target.value)}
             placeholder="Describe la incidencia"
+            className="form-control"
           />
-          <button onClick={handleAddIncidencia}>Subir Incidencia</button>
-          <button onClick={() => setShowIncidenciaForm(false)}>Cancelar</button>
-        </>
+          <button className="btn btn-primary" onClick={handleAddIncidencia}>Subir Incidencia</button>
+          <button className="btn btn-secondary" onClick={() => setShowIncidenciaForm(false)}>Cancelar</button>
+        </div>
       ) : (
         userRole !== 'usuario' && (
-          <button onClick={() => setShowIncidenciaForm(true)}>Nueva Incidencia</button>
+          <button className="btn btn-primary" onClick={() => setShowIncidenciaForm(true)}>Nueva Incidencia</button>
         )
       )}
     </div>

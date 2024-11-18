@@ -1,0 +1,106 @@
+.config-window {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  .config-window h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .config-window h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+  }
+  
+  .config-window label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: 600;
+    display: block;
+  }
+  
+  .config-window select,
+  .config-window input[type="text"],
+  .config-window input[type="password"],
+  .config-window input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .config-window select:focus,
+  .config-window input[type="text"]:focus,
+  .config-window input[type="password"]:focus,
+  .config-window input[type="email"]:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .config-window input[disabled] {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+  }
+  
+  .config-window .user-data {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .config-window button {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .config-window button:hover {
+    opacity: 0.9;
+  }
+  
+  .config-window button:first-of-type {
+    background-color: #007bff;
+  }
+  
+  .config-window button:last-of-type {
+    background-color: #dc3545;
+    margin-left: 10px;
+  }
+  
+  .config-window .config-option {
+    margin-bottom: 15px;
+  }
+  
+  .config-window .config-option label {
+    margin-right: 10px;
+  }
+  
+  .config-window .config-option p {
+    font-size: 13px;
+    color: #666;
+    margin-top: 5px;
+  }
+  

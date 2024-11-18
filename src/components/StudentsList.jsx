@@ -37,6 +37,7 @@ function StudentsList({ onStudentSelect }) {
           grupo: student.grupo,
           turno: student.turno,
           activo: student.activo,
+          imagen: student.imagen || "/default-student.jpg" // Añadido: Imagen de perfil
         }));
         
         const sortedStudents = studentsList.sort((a, b) => {
@@ -173,16 +174,33 @@ function StudentsList({ onStudentSelect }) {
           </div>
         </>
       )}
+
       
-      <ul>
-        {filteredStudents.map((student) => (
-          <li key={student.id}>
-            <button onClick={() => onStudentSelect(student.id)}>
-              {`${student.apellido_paterno} ${student.apellido_materno}, ${student.nombre}`}
-            </button>
-          </li>
-        ))}
-      </ul>
+        <div className="students-list-container">
+          <ul className="students-list">
+            {filteredStudents.map((student) => (
+              <li key={student.id}>
+                <button onClick={() => onStudentSelect(student.id)}>
+                  <img 
+                    src={student.imagen || "/default-user.jpg"} 
+                    alt="Perfil" 
+                    className="student-image" 
+                    onError={(e) => {
+                      e.target.src = "/default-user.jpg";
+                    }}
+                  />
+                  <div className="student-info">
+                    <span className="student-name">{`${student.apellido_paterno} ${student.apellido_materno}, ${student.nombre}`}</span>
+                    <span className="student-details">{`${student.grado}° ${student.grupo} - ${student.turno}`}</span>
+                  </div>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+
+
     </div>
   );
 }

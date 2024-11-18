@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ConfigContext } from './ConfigContext';
+import '../css/ConfigWindow.css';
 
 function ConfigWindow() {
   const { apiUrl, setIsProduction } = useContext(ConfigContext);

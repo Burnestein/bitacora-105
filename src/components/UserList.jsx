@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ConfigContext } from './ConfigContext';
+import '../css/UserList.css';
 
-function UserList({ onUserSelect, setView }) { // Asegúrate de recibir `setView` como prop
+function UserList({ onUserSelect, setView }) {
   const { apiUrl } = useContext(ConfigContext);
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -15,7 +16,7 @@ function UserList({ onUserSelect, setView }) { // Asegúrate de recibir `setView
         const response = await fetch(`${apiUrl}/api/usuarios`);
         if (!response.ok) throw new Error('Error fetching users');
         const data = await response.json();
-        
+
         const usersList = data.map(user => ({
           id: user.id,
           nombre: user.nombre,
@@ -23,10 +24,11 @@ function UserList({ onUserSelect, setView }) { // Asegúrate de recibir `setView
           usuario: user.usuario,
           rol: user.rol,
           activo: user.activo,
+          imagen: user.imagen || "/default-user.jpg", // Ruta de imagen de perfil
         }));
 
         setUsers(usersList);
-        setFilteredUsers(usersList); // Inicialmente todos los usuarios están visibles
+        setFilteredUsers(usersList);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -58,11 +60,10 @@ function UserList({ onUserSelect, setView }) { // Asegúrate de recibir `setView
   };
 
   const handleCreateUser = () => {
-    setView('Agregar Usuario'); // Cambia la vista a "Agregar Usuario" cuando se haga clic en el botón
+    setView('Agregar Usuario');
   };
 
   if (loading) return <p>Cargando usuarios...</p>;
-
   if (users.length === 0) return <p>No hay usuarios disponibles.</p>;
 
   return (
@@ -97,15 +98,21 @@ function UserList({ onUserSelect, setView }) { // Asegúrate de recibir `setView
         <button className="btn btn-primary" onClick={handleSearch}>Buscar</button>
       </div>
 
-      <ul>
-        {filteredUsers.map(user => (
-          <li key={user.id}>
-            <button onClick={() => onUserSelect(user.id)}>
-              {`${user.nombre} ${user.apellido}`} - {user.usuario} - {user.rol} - {user.activo ? 'Activo' : 'Inactivo'}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div className="user-list-container">
+        <ul>
+          {filteredUsers.map(user => (
+            <li key={user.id}>
+              <button onClick={() => onUserSelect(user.id)}>
+                <img src={user.imagen} alt="Perfil" className="profile-pic" />
+                <div className="user-info">
+                  <span className="user-name">{`${user.nombre} ${user.apellido}`}</span>
+                  <span className="user-details">{user.usuario} - {user.rol} - {user.activo ? 'Activo' : 'Inactivo'}</span>
+                </div>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

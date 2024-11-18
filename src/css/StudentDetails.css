@@ -1,0 +1,208 @@
+.student-details {
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  .student-details h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .student-details .student-info-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 8px;
+  }
+  
+  .student-details .student-info-field:last-child {
+    border-bottom: none;
+  }
+  
+  .student-details p {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+  }
+  
+  .student-details label {
+    font-weight: bold;
+    color: #333;
+    margin-right: 8px;
+  }
+  
+  .student-info-field strong {
+    margin-right: 5px;
+  }
+  
+  .edit-button {
+    background: transparent;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+  
+  .edit-button:hover {
+    color: #0056b3;
+  }
+  
+  .edit-icon {
+    font-size: 1.2em;
+    margin-left: 10px;
+  }
+  
+  .edit-input,
+  .edit-select {
+    width: calc(100% - 30px);
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .student-details button {
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .save-button {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .save-button:hover {
+    background-color: #218838;
+  }
+  
+  .cancel-button {
+    background-color: #dc3545;
+    color: white;
+    margin-left: 10px;
+  }
+  
+  .cancel-button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Incidencias list styling */
+  .incidencias-list {
+    margin-top: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+  
+  .incidencia-item {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border: 1px solid #ddd;
+  }
+  
+  .incidencia-content {
+    max-width: 80%;
+  }
+  
+  .incidencia-text {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .incidencia-details {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .incidencia-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .incidencia-actions .btn {
+    font-size: 18px;
+    padding: 5px;
+    transition: color 0.3s ease;
+  }
+  
+  .incidencia-actions .btn-outline-primary:hover {
+    color: #0056b3;
+  }
+  
+  .incidencia-actions .btn-outline-danger:hover {
+    color: #c82333;
+  }
+  
+  /* Edit textarea styling */
+  .edit-textarea {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    resize: vertical;
+  }
+  
+  /* Buttons for editing incidence */
+  .incidencia-edit-buttons {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+  }
+  
+  /* New incidence form */
+  .new-incidencia-form {
+    margin-top: 10px;
+  }
+  
+  .new-incidencia-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    resize: vertical;
+  }
+  
+  .new-incidencia-form button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .new-incidencia-form button:hover {
+    background-color: #0056b3;
+  }
+  
