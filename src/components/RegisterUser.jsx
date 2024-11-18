@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../css/RegisterUser.css';
 
 function RegisterUser({ onCancel }) {
   const [nombre, setNombre] = useState('');
@@ -32,20 +33,20 @@ function RegisterUser({ onCancel }) {
 
     if (!validateEmail(correo)) {
       setError('Correo electrónico inválido.');
-      setCorreo(''); // Limpia el campo de correo si es inválido
+      setCorreo('');
       return;
     }
 
     if (!validatePassword(password)) {
       setError('La contraseña debe tener al menos una mayúscula, una minúscula y un número.');
-      setPassword(''); // Limpia el campo de contraseña
-      setConfirmPassword(''); // Limpia también la confirmación de contraseña
+      setPassword('');
+      setConfirmPassword('');
       return;
     }
 
     if (password !== confirmPassword) {
       setError('Las contraseñas no coinciden.');
-      setConfirmPassword(''); // Limpia el campo de confirmación de contraseña
+      setConfirmPassword('');
       return;
     }
 
@@ -62,11 +63,11 @@ function RegisterUser({ onCancel }) {
 
       if (response.ok) {
         setSuccess('Usuario registrado exitosamente.');
-        setTimeout(onCancel, 2000); // Vuelve al login después de 2 segundos
+        setTimeout(onCancel, 2000);
       } else if (data.error) {
         setError(data.error);
-        if (data.error.includes('correo')) setCorreo(''); // Limpia el campo de correo si el error es con el correo
-        if (data.error.includes('usuario')) setUsuario(''); // Limpia el campo de usuario si el error es con el usuario
+        if (data.error.includes('correo')) setCorreo('');
+        if (data.error.includes('usuario')) setUsuario('');
       }
     } catch (error) {
       console.error('Error de conexión:', error);
@@ -157,7 +158,7 @@ function RegisterUser({ onCancel }) {
         </div>
         {error && <p className="error-message">{error}</p>}
         {success && <p className="success-message">{success}</p>}
-        <div>
+        <div className="button-container">
           <button type="button" onClick={handleRegister}>Confirmar</button>
           <button type="button" onClick={onCancel}>Cancelar</button>
         </div>

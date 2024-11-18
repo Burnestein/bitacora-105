@@ -14,7 +14,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
   const [editedIncidenciaText, setEditedIncidenciaText] = useState('');
 
   const userRole = localStorage.getItem('rol');
-  const userId = localStorage.getItem('usuario_id'); // ID del usuario actual
+  const userId = localStorage.getItem('usuario_id');
 
   // Fetch student details and incidencias from API
   useEffect(() => {
@@ -27,7 +27,6 @@ function StudentDetails({ studentId, onUpdateStudent }) {
 
         const incidenciasResponse = await fetch(`${apiUrl}/api/alumnos/${studentId}/incidencias`);
         const incidenciasData = await incidenciasResponse.json();
-        console.log("Fetched incidencias:", incidenciasData); // Debug log
         setIncidencias(
           incidenciasData.map((incidencia) => ({
             ...incidencia,
@@ -75,7 +74,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
 
   // Enable editing mode for an incidencia
   const startEditingIncidencia = (incidencia) => {
-    if (incidencia.usuario_id === userId) {
+    if (incidencia.usuario_id.toString() === userId.toString()) {
       setEditingIncidencia(incidencia.id);
       setEditedIncidenciaText(incidencia.texto);
     } else {
@@ -125,41 +124,191 @@ function StudentDetails({ studentId, onUpdateStudent }) {
     }
   };
 
-  if (!student) return <p>No se ha seleccionado ningún alumno.</p>;
+  // Save edited student data
+  const saveEditedData = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${apiUrl}/api/alumnos/${studentId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editedData),
+      });
 
-  console.log("User ID:", userId); // Debug log
+      if (!response.ok) throw new Error('Error updating student');
+
+      setStudent(editedData); // Update local student data
+      setIsEditing(false); // Exit edit mode
+      onUpdateStudent(); // Trigger any additional actions
+    } catch (error) {
+      console.error('Error updating student:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!student) return <p>No se ha seleccionado ningún alumno.</p>;
 
   return (
     <div className="student-details">
       <h2>Detalles de {student.nombre}</h2>
 
       {isEditing ? (
-        <div>
-          <label>Activo: </label>
-          <input
-            type="checkbox"
-            name="activo"
-            checked={editedData.activo}
-            onChange={(e) =>
-              setEditedData({
-                ...editedData,
-                activo: e.target.checked,
-              })
-            }
-          />
-        </div>
+        <>
+          <div>
+            <label>Código de Alumno:</label>
+            <input
+              type="text"
+              value={editedData.codigo_alumno}
+              onChange={(e) => setEditedData({ ...editedData, codigo_alumno: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Nombre:</label>
+            <input
+              type="text"
+              value={editedData.nombre}
+              onChange={(e) => setEditedData({ ...editedData, nombre: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Apellido Paterno:</label>
+            <input
+              type="text"
+              value={editedData.apepa}
+              onChange={(e) => setEditedData({ ...editedData, apepa: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Apellido Materno:</label>
+            <input
+              type="text"
+              value={editedData.apemat}
+              onChange={(e) => setEditedData({ ...editedData, apemat: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Domicilio:</label>
+            <input
+              type="text"
+              value={editedData.domicilio}
+              onChange={(e) => setEditedData({ ...editedData, domicilio: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Nombre del Padre o Tutor:</label>
+            <input
+              type="text"
+              value={editedData.padre}
+              onChange={(e) => setEditedData({ ...editedData, padre: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Parentesco:</label>
+            <input
+              type="text"
+              value={editedData.parentezco}
+              onChange={(e) => setEditedData({ ...editedData, parentezco: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Correo del Tutor:</label>
+            <input
+              type="email"
+              value={editedData.correo_tutor}
+              onChange={(e) => setEditedData({ ...editedData, correo_tutor: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Teléfono:</label>
+            <input
+              type="text"
+              value={editedData.telefono}
+              onChange={(e) => setEditedData({ ...editedData, telefono: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Teléfono del Domicilio:</label>
+            <input
+              type="text"
+              value={editedData.telefonod}
+              onChange={(e) => setEditedData({ ...editedData, telefonod: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Teléfono del Tutor:</label>
+            <input
+              type="text"
+              value={editedData.telefonot}
+              onChange={(e) => setEditedData({ ...editedData, telefonot: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Grado:</label>
+            <select
+              value={editedData.grado}
+              onChange={(e) => setEditedData({ ...editedData, grado: parseInt(e.target.value) })}
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+          <div>
+            <label>Grupo:</label>
+            <select
+              value={editedData.grupo}
+              onChange={(e) => setEditedData({ ...editedData, grupo: e.target.value })}
+            >
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+            </select>
+          </div>
+          <div>
+            <label>Turno:</label>
+            <select
+              value={editedData.turno}
+              onChange={(e) => setEditedData({ ...editedData, turno: e.target.value })}
+            >
+              <option value="Matutino">Matutino</option>
+              <option value="Vespertino">Vespertino</option>
+            </select>
+          </div>
+          {userRole === 'admin' && (
+            <div>
+              <label>Activo:</label>
+              <input
+                type="checkbox"
+                checked={editedData.activo}
+                onChange={(e) => setEditedData({ ...editedData, activo: e.target.checked })}
+              />
+            </div>
+          )}
+          <button onClick={saveEditedData}>Aceptar</button>
+          <button onClick={() => setIsEditing(false)}>Cancelar edición</button>
+        </>
       ) : (
-        <p><strong>Estado:</strong> {student.activo ? 'Activo' : 'Inactivo'}</p>
-      )}
-
-      <p><strong>Código de Alumno:</strong> {student.codigo_alumno}</p>
-
-      {loading ? (
-        <p>Guardando...</p>
-      ) : isEditing && userRole === 'admin' ? (
-        <button onClick={() => setIsEditing(false)}>Cancelar edición</button>
-      ) : (
-        userRole === 'admin' && <button onClick={() => setIsEditing(true)}>Editar</button>
+        <>
+          <p><strong>Código de Alumno:</strong> {student.codigo_alumno}</p>
+          <p><strong>Nombre:</strong> {student.nombre}</p>
+          <p><strong>Apellido Paterno:</strong> {student.apepa}</p>
+          <p><strong>Apellido Materno:</strong> {student.apemat}</p>
+          <p><strong>Domicilio:</strong> {student.domicilio}</p>
+          <p><strong>Padre o Tutor:</strong> {student.padre}</p>
+          <p><strong>Parentesco:</strong> {student.parentezco}</p>
+          <p><strong>Correo del Tutor:</strong> {student.correo_tutor}</p>
+          <p><strong>Teléfono:</strong> {student.telefono}</p>
+          <p><strong>Teléfono del Domicilio:</strong> {student.telefonod}</p>
+          <p><strong>Teléfono del Tutor:</strong> {student.telefonot}</p>
+          <p><strong>Grado:</strong> {student.grado}</p>
+          <p><strong>Grupo:</strong> {student.grupo}</p>
+          <p><strong>Turno:</strong> {student.turno}</p>
+          <p><strong>Estado:</strong> {student.activo ? 'Activo' : 'Inactivo'}</p>
+          {userRole === 'admin' && (
+            <button onClick={() => setIsEditing(true)}>Editar</button>
+          )}
+        </>
       )}
 
       <h3>Incidencias</h3>
@@ -180,11 +329,8 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               <>
                 <p><strong>Texto:</strong> {incidencia.texto}</p>
                 <p><strong>Creado por:</strong> {incidencia.creador}</p>
-                {/* Verifica si el usuario actual creó la incidencia antes de mostrar el botón */}
-                {incidencia.usuario_id === userId && (
-                  <button onClick={() => startEditingIncidencia(incidencia)}>
-                    Editar
-                  </button>
+                {incidencia.usuario_id.toString() === userId.toString() && (
+                  <button onClick={() => startEditingIncidencia(incidencia)}>Editar</button>
                 )}
               </>
             )}

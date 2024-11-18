@@ -1,3 +1,5 @@
+// Login.jsx
+
 import React, { useState } from 'react';
 import RegisterUser from './RegisterUser'; // Importa el componente de registro
 import '../css/Login.css';
@@ -44,13 +46,13 @@ function Login({ onLogin }) {
       <h2>Iniciar Sesión</h2>
       <form onSubmit={(e) => e.preventDefault()}>
         <div>
-          <label htmlFor="email">Correo Electrónico</label>
+          <label htmlFor="email">Correo Electrónico o Usuario</label>
           <input
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Ingresa tu correo"
+            placeholder="Ingresa tu correo o usuario"
             required
           />
         </div>
@@ -66,7 +68,7 @@ function Login({ onLogin }) {
           />
         </div>
         {error && <p className="error-message">{error}</p>}
-        <div>
+        <div className="button-container">
           <button type="button" onClick={handleLogin}>Iniciar Sesión</button>
           <button type="button" onClick={() => setShowRegister(true)}>Registrarse</button> {/* Activa el formulario de registro */}
         </div>

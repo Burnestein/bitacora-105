@@ -1,25 +1,89 @@
+/* Login.css */
+
 .login {
-    max-width: 400px;
-    margin: 100px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .login form div {
-    margin-bottom: 15px;
-  }
-  
-  .login input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-  }
-  
-  .login button {
-    width: 48%;
-    padding: 10px;
-    margin-right: 4%;
-  }
-  
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 40px 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.login h2 {
+  font-size: 1.8em;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #333333;
+}
+
+.login label {
+  display: block;
+  font-weight: 500;
+  color: #666666;
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+.login input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+}
+
+.login input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.login .error-message {
+  color: #e74c3c;
+  font-size: 0.9em;
+  margin: 15px 0;
+  font-weight: 500;
+}
+
+.login .button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.login button {
+  width: 100%;
+  max-width: 180px;
+  padding: 12px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login button[type="button"] {
+  background-color: #007bff;
+  color: white;
+}
+
+.login button[type="button"]:hover {
+  background-color: #0056b3;
+}
+
+.login button[type="button"]:last-child {
+  background-color: #6c757d;
+  color: white;
+}
+
+.login button[type="button"]:last-child:hover {
+  background-color: #5a6268;
+}
+
+.login form div {
+  margin-bottom: 20px;
+}
