@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { ConfigContext } from './ConfigContext';  // Importa el contexto
+import '../css/AddStudentForm.css';
 
 function AddStudentForm() {
   const { apiUrl } = useContext(ConfigContext);  // Obtén apiUrl desde el contexto

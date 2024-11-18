@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ConfigContext } from './ConfigContext';
+import '../css/StudentsList.css';
 
 function StudentsList({ onStudentSelect }) {
   const { apiUrl } = useContext(ConfigContext);
