@@ -1,7 +1,45 @@
 .main-content {
-    padding: 20px;
-    background-color: #e2e2e2c9;
-    height: 100%;
-    overflow-y: auto;
+
+  background-color: #f9f9f9;
+  min-height: 90vh; /* Para ocupar toda la altura de la ventana */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* Garantiza que los elementos se alineen verticalmente */
+  overflow-y: auto;
+}
+
+.welcome-container {
+  text-align: center;
+  margin-top: 10px;
+  animation: fadeIn 1s ease-in-out; /* Animación de aparición */
+}
+
+.welcome-image {
+  max-width: 80%; /* Hace que la imagen sea responsiva */
+  max-height: 450px; /* Limita la altura de la imagen */
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-text {
+  font-size: 28px;
+  font-weight: bold;
+  color: #228B22; /* Verde */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
+
+/* Animación para la bienvenida */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

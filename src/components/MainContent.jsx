@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import StudentsList from './StudentsList';
 import StudentDetails from './StudentDetails';
 import AddStudentForm from './AddStudentForm';
@@ -6,11 +6,13 @@ import ConfigWindow from './ConfigWindow';
 import AddUserForm from './AddUserForm';
 import UserList from './UserList';
 import UserDetails from './UserDetails';
+import { ConfigContext } from './ConfigContext';
+import '../css/MainContent.css';
 
-function MainContent({ view, setView }) { // Añadimos setView como prop
+function MainContent({ view, setView }) {
+  const { apiUrl } = useContext(ConfigContext); // Usar el contexto para obtener la URL de la API
   const [selectedStudentId, setSelectedStudentId] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null);
-  const [apiUrl, setApiUrl] = useState('https://escuelasecundaria105.uno/');
 
   useEffect(() => {
     setSelectedStudentId(null);
@@ -28,38 +30,51 @@ function MainContent({ view, setView }) { // Añadimos setView como prop
   return (
     <div className="main-content">
       {view === 'Inicio' && (
-        <div>
-          <h2>Página de Inicio</h2>
-          <p>Bienvenido a la bitácora de incidencias.</p>
+        <div className="welcome-container">
+          <img 
+            src="/secu105.jpeg" 
+            alt="Logo de la Secundaria 105" 
+            className="welcome-image"
+          />
+          <h1 className="welcome-text">Bienvenido al Sistema de Incidencias Académicas</h1>
         </div>
       )}
 
       {view === 'Lista de Alumnos' && !selectedStudentId && (
-        <StudentsList onStudentSelect={handleStudentSelect} apiUrl={apiUrl} />
+        <StudentsList onStudentSelect={handleStudentSelect} />
       )}
 
       {selectedStudentId && (
-        <StudentDetails studentId={selectedStudentId} apiUrl={apiUrl} onUpdateStudent={() => setSelectedStudentId(null)} />
+        <StudentDetails 
+          studentId={selectedStudentId} 
+          onUpdateStudent={() => setSelectedStudentId(null)} 
+        />
       )}
 
       {view === 'Agregar Alumno' && (
-        <AddStudentForm apiUrl={apiUrl} />
+        <AddStudentForm />
       )}
 
       {view === 'Agregar Usuario' && (
-        <AddUserForm apiUrl={apiUrl} />
+        <AddUserForm />
       )}
 
       {view === 'Lista de Usuarios' && !selectedUserId && (
-        <UserList onUserSelect={handleUserSelect} setView={setView} apiUrl={apiUrl} /> // Pasamos setView a UserList
+        <UserList 
+          onUserSelect={handleUserSelect} 
+          setView={setView} 
+        />
       )}
 
       {selectedUserId && (
-        <UserDetails userId={selectedUserId} apiUrl={apiUrl} onUpdateUser={() => setSelectedUserId(null)} />
+        <UserDetails 
+          userId={selectedUserId} 
+          onUpdateUser={() => setSelectedUserId(null)} 
+        />
       )}
 
       {view === 'Configuración' && (
-        <ConfigWindow apiUrl={apiUrl} setApiUrl={setApiUrl} />
+        <ConfigWindow />
       )}
     </div>
   );
