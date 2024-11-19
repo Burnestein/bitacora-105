@@ -1,12 +1,10 @@
-/* Header.css */
-
 .header {
   background-color: #f8f9fa;
   padding: 10px 20px;
   border-bottom: 1px solid #ddd;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center; /* Centra horizontalmente los elementos dentro del .header */
+  align-items: center; /* Centra verticalmente todos los elementos dentro del .header */
 }
 
 .header h1 {

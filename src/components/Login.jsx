@@ -17,19 +17,25 @@ function Login({ onLogin }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ usuario: email, password }),
+        body: JSON.stringify({ usuario: email, correo: email, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
+        // Verificar si el usuario está activo
+        if (!data.user) {
+          setError('Usuario inactivo. Contacta al administrador.');
+          return;
+        }
+
         // Guarda el token y otros datos en localStorage
         localStorage.setItem('token', data.token);
         localStorage.setItem('rol', data.user.rol); // Guardamos el rol del usuario
         localStorage.setItem('nombreUsuario', `${data.user.nombre} ${data.user.apepa}`);
         localStorage.setItem('usuario_id', data.user.id);
         localStorage.setItem('usuario', data.user.usuario);
-        onLogin();  // Cambia al Dashboard
+        onLogin(); // Cambia al Dashboard
       } else {
         setError(data.error || 'Error en el inicio de sesión');
       }
@@ -48,7 +54,7 @@ function Login({ onLogin }) {
         <div>
           <label htmlFor="email">Correo Electrónico o Usuario</label>
           <input
-            type="email"
+            type="text"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

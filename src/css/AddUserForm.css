@@ -1,0 +1,81 @@
+.add-user-form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Habilita desplazamiento si el contenido excede la altura */
+  }
+  
+  .add-user-form h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .add-user-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre campos */
+  }
+  
+  .add-user-form label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .add-user-form input,
+  .add-user-form select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .add-user-form input:focus,
+  .add-user-form select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .add-user-form button {
+    width: calc(100% - 20px);
+    margin: 10px 10px 0 10px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-user-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .add-user-form p {
+    text-align: center;
+    font-size: 14px;
+    color: #28a745;
+    margin-top: 10px;
+  }
+  
+  .add-user-form .error-message {
+    color: #dc3545;
+  }
+  
+  .add-user-form .success-message {
+    color: #28a745;
+  }
+  

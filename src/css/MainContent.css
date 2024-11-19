@@ -2,7 +2,7 @@
 
   background-color: #f9f9f9;
   min-height: 90vh; /* Para ocupar toda la altura de la ventana */
-  display: flex;
+  
   justify-content: center;
   align-items: center;
   flex-direction: column; /* Garantiza que los elementos se alineen verticalmente */
@@ -13,6 +13,7 @@
   text-align: center;
   margin-top: 10px;
   animation: fadeIn 1s ease-in-out; /* Animación de aparición */
+  margin-top: 60px;
 }
 
 .welcome-image {

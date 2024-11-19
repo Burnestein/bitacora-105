@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { ConfigContext } from './ConfigContext';
+import '../css/AddUserForm.css';
 
 function AddUserForm({ apiUrl }) {
   const [nombre, setNombre] = useState('');

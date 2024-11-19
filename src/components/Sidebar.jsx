@@ -40,6 +40,10 @@ function Sidebar({ setView, userImage, toggleSidebar, isExpanded }) {
                         <span className="option-icon" role="img" aria-label="Lista de Usuarios">👥</span>
                         <span className="option-text">Lista de Usuarios</span>
                     </button>
+                    <button className="btn btn-secondary option-button" onClick={() => handleViewChange('Configuración')}>
+                        <span className="option-icon" role="img" aria-label="Configuración">⚙️</span>
+                        <span className="option-text">Configuración</span>
+                    </button>
                 </>
             )}
 

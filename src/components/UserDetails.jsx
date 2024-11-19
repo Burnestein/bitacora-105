@@ -40,8 +40,9 @@ function UserDetails({ userId, onUpdateUser }) {
   }, [userId, apiUrl]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedData({ ...editedData, [name]: value });
+    const { name, value, type, checked } = e.target;
+    const fieldValue = type === 'checkbox' ? checked : value;
+    setEditedData({ ...editedData, [name]: fieldValue });
   };
 
   const handleSave = async () => {
@@ -149,13 +150,23 @@ function UserDetails({ userId, onUpdateUser }) {
           </div>
           <div className="user-info-field">
             <label>Estado:</label>
-            <select name="activo" value={editedData.activo ? 'true' : 'false'} onChange={handleChange} className="form-select">
-              <option value="true">Activo</option>
-              <option value="false">Inactivo</option>
-            </select>
+            <input
+              type="checkbox"
+              name="activo"
+              checked={editedData.activo}
+              onChange={handleChange}
+              className="form-check-input"
+            />
+            <span>{editedData.activo ? 'Activo' : 'Inactivo'}</span>
           </div>
-          <button onClick={handleSave} disabled={loading} className="btn btn-success">Guardar</button>
-          <button onClick={handleCancel} className="btn btn-danger">Cancelar</button>
+          <div className="d-flex gap-3 mt-3">
+            <button onClick={handleSave} disabled={loading} className="btn btn-success">
+              Confirmar
+            </button>
+            <button onClick={handleCancel} className="btn btn-secondary">
+              Cancelar
+            </button>
+          </div>
         </>
       ) : (
         <>
