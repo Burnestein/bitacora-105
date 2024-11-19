@@ -148,16 +148,20 @@ function UserDetails({ userId, onUpdateUser }) {
               <option value="usuario">Usuario</option>
             </select>
           </div>
-          <div className="user-info-field">
-            <label>Estado:</label>
-            <input
-              type="checkbox"
-              name="activo"
-              checked={editedData.activo}
-              onChange={handleChange}
-              className="form-check-input"
-            />
-            <span>{editedData.activo ? 'Activo' : 'Inactivo'}</span>
+          <div className="user-info-field d-flex align-items-center">
+            <label className="me-2">Estado:</label>
+            <div className="form-check form-switch">
+              <input
+                type="checkbox"
+                name="activo"
+                checked={editedData.activo}
+                onChange={handleChange}
+                className="form-check-input"
+              />
+              <label className="form-check-label">
+                {editedData.activo ? 'Activo' : 'Inactivo'}
+              </label>
+            </div>
           </div>
           <div className="d-flex gap-3 mt-3">
             <button onClick={handleSave} disabled={loading} className="btn btn-success">

@@ -9,10 +9,6 @@
   overflow-y: auto; /* Permite el desplazamiento vertical si el contenido excede el límite */
 }
 
-.students-list-container {
-  
-}
-
 .students-list h2 {
   font-size: 24px;
   font-weight: 600;

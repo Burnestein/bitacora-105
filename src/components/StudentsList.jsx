@@ -24,9 +24,9 @@ function StudentsList({ onStudentSelect }) {
     const fetchFromServer = async () => {
       try {
         const response = await fetch(`${apiUrl}/api/alumnos?userId=${userId}&rol=${rol}`);
-        if (!response.ok) throw new Error('Server request failed');
+        if (!response.ok) throw new Error('Error al obtener datos del servidor');
         const data = await response.json();
-        
+
         const studentsList = data.map((student) => ({
           id: student.id,
           codigo_alumno: student.codigo_alumno,
@@ -37,9 +37,9 @@ function StudentsList({ onStudentSelect }) {
           grupo: student.grupo,
           turno: student.turno,
           activo: student.activo,
-          imagen: student.imagen || "/default-student.jpg" // Añadido: Imagen de perfil
+          imagen: student.imagen || "/default-student.jpg",
         }));
-        
+
         const sortedStudents = studentsList.sort((a, b) => {
           const fullNameA = `${a.apellido_paterno} ${a.apellido_materno}`;
           const fullNameB = `${b.apellido_paterno} ${b.apellido_materno}`;
@@ -50,10 +50,11 @@ function StudentsList({ onStudentSelect }) {
         setFilteredStudents(sortedStudents);
         setLoading(false);
       } catch (error) {
-        console.error("Error obteniendo datos del servidor:", error);
+        console.error("Error al obtener datos:", error);
         setLoading(false);
       }
     };
+
     fetchFromServer();
   }, [apiUrl, userId, rol]);
 
@@ -65,9 +66,9 @@ function StudentsList({ onStudentSelect }) {
       const matchesGrado = filters.grado ? student.grado === filters.grado : true;
       const matchesGrupo = filters.grupo ? student.grupo === filters.grupo : true;
       const matchesTurno = filters.turno ? student.turno === filters.turno : true;
-      const matchesEstado = filters.estado === 'todos' || 
-                            (filters.estado === 'activo' && student.activo) ||
-                            (filters.estado === 'inactivo' && !student.activo);
+      const matchesEstado = filters.estado === 'todos' ||
+        (filters.estado === 'activo' && student.activo) ||
+        (filters.estado === 'inactivo' && !student.activo);
       return matchesSearchTerm && matchesGrado && matchesGrupo && matchesTurno && matchesEstado;
     });
 
@@ -79,11 +80,10 @@ function StudentsList({ onStudentSelect }) {
   const handleFilterChange = (e) => {
     setFilters({
       ...filters,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  // Función para manejar la relación con un alumno
   const handleAddStudent = async () => {
     if (!studentCode.trim()) return;
 
@@ -94,12 +94,12 @@ function StudentsList({ onStudentSelect }) {
         body: JSON.stringify({ codigo_alumno: studentCode }),
       });
 
-      if (!response.ok) throw new Error('Error adding student relation');
+      if (!response.ok) throw new Error('Error al agregar relación con alumno');
       setStudentCode('');
       setShowAddStudent(false);
       alert("Relación con alumno agregada exitosamente");
     } catch (error) {
-      console.error("Error adding student relation:", error);
+      console.error("Error al agregar relación con alumno:", error);
     }
   };
 
@@ -115,7 +115,6 @@ function StudentsList({ onStudentSelect }) {
     <div className="students-list">
       <h2>Lista de Alumnos</h2>
 
-      {/* Botón para relacionar alumno, solo visible para el rol "usuario" */}
       {rol === 'usuario' && (
         <div className="add-student-relation">
           {showAddStudent ? (
@@ -136,7 +135,6 @@ function StudentsList({ onStudentSelect }) {
         </div>
       )}
 
-      {/* Oculta los elementos de búsqueda y filtrado si el rol es 'usuario' */}
       {rol !== 'usuario' && (
         <>
           <div className="search-bar mb-3">
@@ -175,32 +173,29 @@ function StudentsList({ onStudentSelect }) {
         </>
       )}
 
+      <div className="students-list-container">
+        <ul className="students-list">
+          {filteredStudents.map((student) => (
+            <li key={student.id}>
+              <button onClick={() => onStudentSelect(student.id)}>
+                <img 
+                  src={student.imagen} 
+                  alt="Perfil" 
+                  className="student-image" 
+                  onError={(e) => {
+                    e.target.src = "/default-user.jpg";
+                  }}
+                />
+                <div className="student-info">
+                  <span className="student-name">{`${student.apellido_paterno} ${student.apellido_materno}, ${student.nombre}`}</span>
+                  <span className="student-details">{`${student.grado}° ${student.grupo} - ${student.turno}`}</span>
+                </div>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
       
-        <div className="students-list-container">
-          <ul className="students-list">
-            {filteredStudents.map((student) => (
-              <li key={student.id}>
-                <button onClick={() => onStudentSelect(student.id)}>
-                  <img 
-                    src={student.imagen || "/default-user.jpg"} 
-                    alt="Perfil" 
-                    className="student-image" 
-                    onError={(e) => {
-                      e.target.src = "/default-user.jpg";
-                    }}
-                  />
-                  <div className="student-info">
-                    <span className="student-name">{`${student.apellido_paterno} ${student.apellido_materno}, ${student.nombre}`}</span>
-                    <span className="student-details">{`${student.grado}° ${student.grupo} - ${student.turno}`}</span>
-                  </div>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-
-
     </div>
   );
 }
