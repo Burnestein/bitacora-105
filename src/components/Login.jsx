@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import RegisterUser from './RegisterUser'; // Importa el componente de registro
+import PasswordRecovery from './PasswordRecovery'; // Importa el componente de recuperación de contraseña
 import '../css/Login.css';
 
 function Login({ onLogin }) {
@@ -9,6 +10,7 @@ function Login({ onLogin }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [showRegister, setShowRegister] = useState(false); // Estado para alternar entre login y registro
+  const [showRecovery, setShowRecovery] = useState(false); // Estado para alternar entre login y recuperación
 
   const handleLogin = async () => {
     try {
@@ -47,6 +49,8 @@ function Login({ onLogin }) {
 
   return showRegister ? (
     <RegisterUser onCancel={() => setShowRegister(false)} /> // Muestra el formulario de registro si está activo
+  ) : showRecovery ? (
+    <PasswordRecovery onCancel={() => setShowRecovery(false)} /> // Muestra el formulario de recuperación de contraseña
   ) : (
     <div className="login">
       <h2>Iniciar Sesión</h2>
@@ -76,7 +80,10 @@ function Login({ onLogin }) {
         {error && <p className="error-message">{error}</p>}
         <div className="button-container">
           <button type="button" onClick={handleLogin}>Iniciar Sesión</button>
-          <button type="button" onClick={() => setShowRegister(true)}>Registrarse</button> {/* Activa el formulario de registro */}
+          <button type="button" onClick={() => setShowRegister(true)}>Registrarse</button>
+          <button type="button" className="recover-password" onClick={() => setShowRecovery(true)}>
+            ¿Olvidaste tu contraseña?
+          </button>
         </div>
       </form>
     </div>
