@@ -2,8 +2,9 @@
     "rewrites": [
       {
         "source": "/api/alumnos",
-        "destination": "https://18.119.213.232:3001/api/alumnos"
-      }
+        "destination": "https://3.144.47.88:3001/api/alumnos"
+      },
+      { "source": "/(.*)", "destination": "/" }
     ]
   }
   

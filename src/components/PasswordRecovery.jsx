@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { ConfigContext } from './ConfigContext'; // Importar el contexto
 import '../css/PasswordRecovery.css';
 
 const PasswordRecovery = ({ onCancel }) => {
+  const { apiUrl } = useContext(ConfigContext); // Obtener `apiUrl` del contexto
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
   const handleRecovery = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/usuarios/recovery', {
+      const response = await fetch(`${apiUrl}/api/usuarios/recovery`, { // Usar `apiUrl`
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ correo: email }),
@@ -21,6 +23,7 @@ const PasswordRecovery = ({ onCancel }) => {
       }
     } catch (error) {
       setMessage('Error al enviar solicitud.');
+      console.error("Error en la recuperación de contraseña:", error);
     }
   };
 
