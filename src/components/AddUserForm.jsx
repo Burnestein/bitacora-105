@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { ConfigContext } from './ConfigContext';
 import '../css/AddUserForm.css';
 
-function AddUserForm({ apiUrl }) {
+function AddUserForm() {
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
   const [usuario, setUsuario] = useState('');
@@ -13,13 +13,14 @@ function AddUserForm({ apiUrl }) {
   const [rol, setRol] = useState('usuario');
   const [correo, setCorreo] = useState('');
   const [message, setMessage] = useState('');
+  const { apiUrl } = useContext(ConfigContext);
 
   const handleAddUser = async (e) => {
     e.preventDefault();
     const newUser = { nombre, telefono, usuario, password, apepa, apemat, domicilio, rol, correo };
 
     try {
-      const response = await fetch(`${apiUrl}api/usuarios`, {
+      const response = await fetch(`${apiUrl}/api/usuarios`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

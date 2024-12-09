@@ -5,6 +5,8 @@ import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import ResetPassword from './components/ResetPassword';
 import { ConfigProvider } from './components/ConfigContext';
+import VerifyUser from './components/VerifyUser';
+import RegisterUser from './components/RegisterUser';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -32,6 +34,9 @@ function App() {
               path="*"
               element={<div>404 - Página no encontrada</div>}
             />
+            <Route path="/register" element={<RegisterUser />} />
+            <Route path="/verify" element={<VerifyUser />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </Router>
       </ConfigProvider>

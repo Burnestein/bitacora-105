@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import '../css/RegisterUser.css';
 
 function RegisterUser({ onCancel }) {
@@ -62,7 +63,7 @@ function RegisterUser({ onCancel }) {
       const data = await response.json();
 
       if (response.ok) {
-        setSuccess('Usuario registrado exitosamente.');
+        setSuccess('Usuario registrado exitosamente. Revisa tu correo para verificar tu cuenta.');
         setTimeout(onCancel, 2000);
       } else if (data.error) {
         setError(data.error);

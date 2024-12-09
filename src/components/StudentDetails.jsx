@@ -177,62 +177,67 @@ function StudentDetails({ studentId, onUpdateStudent }) {
               onChange={(e) => setEditedData({ ...editedData, apemat: e.target.value })}
             />
           </div>
-          <div className="student-info-field">
-            <label>Domicilio:</label>
-            <input
-              type="text"
-              value={editedData.domicilio}
-              onChange={(e) => setEditedData({ ...editedData, domicilio: e.target.value })}
-            />
-          </div>
-          <div className="student-info-field">
-            <label>Nombre del Padre o Tutor:</label>
-            <input
-              type="text"
-              value={editedData.padre}
-              onChange={(e) => setEditedData({ ...editedData, padre: e.target.value })}
-            />
-          </div>
-          <div className="student-info-field">
-            <label>Parentesco:</label>
-            <input
-              type="text"
-              value={editedData.parentezco}
-              onChange={(e) => setEditedData({ ...editedData, parentezco: e.target.value })}
-            />
-          </div>
-          <div className="student-info-field">
-            <label>Correo del Tutor:</label>
-            <input
-              type="email"
-              value={editedData.correo_tutor}
-              onChange={(e) => setEditedData({ ...editedData, correo_tutor: e.target.value })}
-            />
-          </div>
-          <div className="student-info-field">
-            <label>Teléfono:</label>
-            <input
-              type="text"
-              value={editedData.telefono}
-              onChange={(e) => setEditedData({ ...editedData, telefono: e.target.value })}
-            />
-          </div>
-          <div className="student-info-field">
-            <label>Teléfono del Domicilio:</label>
-            <input
-              type="text"
-              value={editedData.telefonod}
-              onChange={(e) => setEditedData({ ...editedData, telefonod: e.target.value })}
-            />
-          </div>
-          <div className="student-info-field">
-            <label>Teléfono del Tutor:</label>
-            <input
-              type="text"
-              value={editedData.telefonot}
-              onChange={(e) => setEditedData({ ...editedData, telefonot: e.target.value })}
-            />
-          </div>
+          {userRole !== 'usuario' && (
+          <>
+            <div className="student-info-field">
+              <label>Domicilio:</label>
+              <input
+                type="text"
+                value={editedData.domicilio}
+                onChange={(e) => setEditedData({ ...editedData, domicilio: e.target.value })}
+              />
+            </div>
+            <div className="student-info-field">
+              <label>Nombre del Padre o Tutor:</label>
+              <input
+                type="text"
+                value={editedData.padre}
+                onChange={(e) => setEditedData({ ...editedData, padre: e.target.value })}
+              />
+            </div>
+            <div className="student-info-field">
+              <label>Parentesco:</label>
+              <input
+                type="text"
+                value={editedData.parentezco}
+                onChange={(e) => setEditedData({ ...editedData, parentezco: e.target.value })}
+              />
+            </div>
+            <div className="student-info-field">
+              <label>Correo del Tutor:</label>
+              <input
+                type="email"
+                value={editedData.correo_tutor}
+                onChange={(e) => setEditedData({ ...editedData, correo_tutor: e.target.value })}
+              />
+            </div>
+            <div className="student-info-field">
+              <label>Teléfono:</label>
+              <input
+                type="text"
+                value={editedData.telefono}
+                onChange={(e) => setEditedData({ ...editedData, telefono: e.target.value })}
+              />
+            </div>
+            <div className="student-info-field">
+              <label>Teléfono del Domicilio:</label>
+              <input
+                type="text"
+                value={editedData.telefonod}
+                onChange={(e) => setEditedData({ ...editedData, telefonod: e.target.value })}
+              />
+            </div>
+            <div className="student-info-field">
+              <label>Teléfono del Tutor:</label>
+              <input
+                type="text"
+                value={editedData.telefonot}
+                onChange={(e) => setEditedData({ ...editedData, telefonot: e.target.value })}
+              />
+            </div>
+          </>
+        )}
+
           <div className="student-info-field">
             <label>Grado:</label>
             <select
@@ -285,13 +290,17 @@ function StudentDetails({ studentId, onUpdateStudent }) {
           <p><strong>Nombre:</strong> {student.nombre}</p>
           <p><strong>Apellido Paterno:</strong> {student.apepa}</p>
           <p><strong>Apellido Materno:</strong> {student.apemat}</p>
-          <p><strong>Domicilio:</strong> {student.domicilio}</p>
-          <p><strong>Padre o Tutor:</strong> {student.padre}</p>
-          <p><strong>Parentesco:</strong> {student.parentezco}</p>
-          <p><strong>Correo del Tutor:</strong> {student.correo_tutor}</p>
-          <p><strong>Teléfono:</strong> {student.telefono}</p>
-          <p><strong>Teléfono del Domicilio:</strong> {student.telefonod}</p>
-          <p><strong>Teléfono del Tutor:</strong> {student.telefonot}</p>
+          {userRole !== 'usuario' && (
+            <>
+              <p><strong>Domicilio:</strong> {student.domicilio}</p>
+              <p><strong>Padre o Tutor:</strong> {student.padre}</p>
+              <p><strong>Parentesco:</strong> {student.parentezco}</p>
+              <p><strong>Correo del Tutor:</strong> {student.correo_tutor}</p>
+              <p><strong>Teléfono:</strong> {student.telefono}</p>
+              <p><strong>Teléfono del Domicilio:</strong> {student.telefonod}</p>
+              <p><strong>Teléfono del Tutor:</strong> {student.telefonot}</p>
+            </>
+          )}
           <p><strong>Grado:</strong> {student.grado}</p>
           <p><strong>Grupo:</strong> {student.grupo}</p>
           <p><strong>Turno:</strong> {student.turno}</p>
@@ -300,6 +309,7 @@ function StudentDetails({ studentId, onUpdateStudent }) {
             <button className="btn btn-warning" onClick={() => setIsEditing(true)}>Editar</button>
           )}
         </>
+
       )}
 
       <h3>Incidencias</h3>

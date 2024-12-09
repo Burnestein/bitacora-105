@@ -1,15 +1,16 @@
 import React, { useState, useContext } from 'react';
-import { ConfigContext } from './ConfigContext';  // Importa el contexto
+import { ConfigContext } from './ConfigContext'; // Importa el contexto
 import '../css/AddStudentForm.css';
 
 function AddStudentForm() {
-  const { apiUrl } = useContext(ConfigContext);  // Obtén apiUrl desde el contexto
+  const { apiUrl } = useContext(ConfigContext); // Obtén apiUrl desde el contexto
   const [formData, setFormData] = useState({
     nombre: '',
     apepa: '',
     apemat: '',
     domicilio: '',
     padre: '',
+    correo_tutor: '',
     parentezco: '',
     telefono: '',
     telefonod: '',
@@ -30,9 +31,23 @@ function AddStudentForm() {
     });
   };
 
+  // Validación del correo electrónico
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   // Función para enviar el formulario a la API
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validar el correo electrónico antes de enviar
+    console.log('Datos enviados desde el formulario:', formData); // Agrega este registro
+    if (!isValidEmail(formData.correo_tutor)) {
+      alert('Por favor, ingresa un correo electrónico válido.');
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await fetch(`${apiUrl}/api/alumnos`, {
@@ -56,6 +71,7 @@ function AddStudentForm() {
         apemat: '',
         domicilio: '',
         padre: '',
+        correo_tutor: '', // Resetear el campo de correo electrónico
         parentezco: '',
         telefono: '',
         telefonod: '',
@@ -113,7 +129,15 @@ function AddStudentForm() {
           name="padre"
           value={formData.padre}
           onChange={handleChange}
-          placeholder="Padre"
+          placeholder="Padre/Tutor"
+          required
+        />
+        <input
+          type="email"
+          name="correo_tutor" // Asegúrate de que el nombre coincide
+          value={formData.correo_tutor}
+          onChange={handleChange}
+          placeholder="Correo Electrónico del Padre/Tutor"
           required
         />
         <select

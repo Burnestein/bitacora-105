@@ -58,6 +58,21 @@ function StudentsList({ onStudentSelect }) {
     fetchFromServer();
   }, [apiUrl, userId, rol]);
 
+  const handleDeleteRelation = async (codigoAlumno) => {
+    try {
+      const response = await fetch(`${apiUrl}/api/usuarios/${userId}/alumnos/${codigoAlumno}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) throw new Error('Error al eliminar relación con alumno.');
+
+      setFilteredStudents((prev) => prev.filter((student) => student.codigo_alumno !== codigoAlumno));
+      alert('Relación eliminada exitosamente.');
+    } catch (error) {
+      console.error('Error al eliminar relación con alumno:', error);
+    }
+  };
+
   const handleSearch = () => {
     const lowercasedTerm = searchTerm.toLowerCase();
     const filtered = students.filter((student) => {
@@ -191,6 +206,14 @@ function StudentsList({ onStudentSelect }) {
                   <span className="student-details">{`${student.grado}° ${student.grupo} - ${student.turno}`}</span>
                 </div>
               </button>
+              {rol === 'usuario' && (
+                <button 
+                  className="btn btn-danger delete-relation-button" 
+                  onClick={() => handleDeleteRelation(student.codigo_alumno)}
+                >
+                  Eliminar
+                </button>
+              )}
             </li>
           ))}
         </ul>

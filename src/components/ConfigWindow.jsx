@@ -9,6 +9,7 @@ function ConfigWindow() {
     telefono: '',
     usuario: '',
     password: '',
+    confirmPassword: '', // Campo para confirmar contraseña
     apepa: '',
     apemat: '',
     domicilio: '',
@@ -32,6 +33,7 @@ function ConfigWindow() {
           telefono: data.telefono,
           usuario: data.usuario,
           password: '', // Password field left blank for security
+          confirmPassword: '', // También en blanco
           apepa: data.apepa,
           apemat: data.apemat,
           domicilio: data.domicilio,
@@ -60,11 +62,19 @@ function ConfigWindow() {
 
   // Save edited user data
   const handleSave = async () => {
+    // Validar que las contraseñas coincidan
+    if (userData.password && userData.password !== userData.confirmPassword) {
+      alert('Las contraseñas no coinciden.');
+      return;
+    }
+
     try {
+      const { confirmPassword, ...dataToSend } = userData; // Excluir confirmPassword del payload
+      console.log('Datos enviados al servidor:', dataToSend); // Verificar el contenido
       const response = await fetch(`${apiUrl}/api/usuarios/${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData),
+        body: JSON.stringify(dataToSend),
       });
       if (!response.ok) throw new Error('Error updating user data');
       alert('Datos actualizados exitosamente');
@@ -130,6 +140,19 @@ function ConfigWindow() {
           disabled={!isEditing}
           placeholder="Ingrese nueva contraseña"
         />
+
+        {isEditing && (
+          <>
+            <label>Confirmar Contraseña:</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={userData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirme la contraseña"
+            />
+          </>
+        )}
 
         <label>Apellido Paterno:</label>
         <input
