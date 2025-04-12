@@ -6,7 +6,7 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBA_c503GnJf8M7DzsnyQhRZQdeB2CI2bg",
+  apiKey: "",
   authDomain: "incidencias-academicas.firebaseapp.com",
   databaseURL: "https://incidencias-academicas-default-rtdb.firebaseio.com",
   projectId: "incidencias-academicas",
